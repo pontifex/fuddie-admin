@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * PaymentMethod
@@ -95,6 +96,7 @@ class PaymentMethod
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -102,6 +104,7 @@ class PaymentMethod
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -131,6 +134,193 @@ class PaymentMethod
      * })
      */
     private $fkUserHasPaymentGateway;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getCIin(): ?string
+    {
+        return $this->cIin;
+    }
+
+    public function setCIin(?string $cIin): self
+    {
+        $this->cIin = $cIin;
+
+        return $this;
+    }
+
+    public function getCLast4Digits(): ?string
+    {
+        return $this->cLast4Digits;
+    }
+
+    public function setCLast4Digits(?string $cLast4Digits): self
+    {
+        $this->cLast4Digits = $cLast4Digits;
+
+        return $this;
+    }
+
+    public function getVToken(): ?string
+    {
+        return $this->vToken;
+    }
+
+    public function setVToken(?string $vToken): self
+    {
+        $this->vToken = $vToken;
+
+        return $this;
+    }
+
+    public function getVTypeCard(): ?string
+    {
+        return $this->vTypeCard;
+    }
+
+    public function setVTypeCard(?string $vTypeCard): self
+    {
+        $this->vTypeCard = $vTypeCard;
+
+        return $this;
+    }
+
+    public function getVBrand(): ?string
+    {
+        return $this->vBrand;
+    }
+
+    public function setVBrand(?string $vBrand): self
+    {
+        $this->vBrand = $vBrand;
+
+        return $this;
+    }
+
+    public function getVIssuer(): ?string
+    {
+        return $this->vIssuer;
+    }
+
+    public function setVIssuer(?string $vIssuer): self
+    {
+        $this->vIssuer = $vIssuer;
+
+        return $this;
+    }
+
+    public function getVDeviceSessionId(): ?string
+    {
+        return $this->vDeviceSessionId;
+    }
+
+    public function setVDeviceSessionId(?string $vDeviceSessionId): self
+    {
+        $this->vDeviceSessionId = $vDeviceSessionId;
+
+        return $this;
+    }
+
+    public function getBDefault(): ?bool
+    {
+        return $this->bDefault;
+    }
+
+    public function setBDefault(bool $bDefault): self
+    {
+        $this->bDefault = $bDefault;
+
+        return $this;
+    }
+
+    public function getBStatus(): ?bool
+    {
+        return $this->bStatus;
+    }
+
+    public function setBStatus(bool $bStatus): self
+    {
+        $this->bStatus = $bStatus;
+
+        return $this;
+    }
+
+    public function getDExpiredAt(): ?\DateTimeInterface
+    {
+        return $this->dExpiredAt;
+    }
+
+    public function setDExpiredAt(?\DateTimeInterface $dExpiredAt): self
+    {
+        $this->dExpiredAt = $dExpiredAt;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    public function getFkPaymentMethodType(): ?PaymentMethodType
+    {
+        return $this->fkPaymentMethodType;
+    }
+
+    public function setFkPaymentMethodType(?PaymentMethodType $fkPaymentMethodType): self
+    {
+        $this->fkPaymentMethodType = $fkPaymentMethodType;
+
+        return $this;
+    }
+
+    public function getFkUserHasPaymentGateway(): ?UserHasPaymentGateway
+    {
+        return $this->fkUserHasPaymentGateway;
+    }
+
+    public function setFkUserHasPaymentGateway(?UserHasPaymentGateway $fkUserHasPaymentGateway): self
+    {
+        $this->fkUserHasPaymentGateway = $fkUserHasPaymentGateway;
+
+        return $this;
+    }
 
 
 }

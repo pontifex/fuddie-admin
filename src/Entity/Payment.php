@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Payment
@@ -53,6 +54,7 @@ class Payment
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -60,6 +62,7 @@ class Payment
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -79,6 +82,109 @@ class Payment
      * })
      */
     private $fkPaymentMethod;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getVGatewayCode(): ?string
+    {
+        return $this->vGatewayCode;
+    }
+
+    public function setVGatewayCode(?string $vGatewayCode): self
+    {
+        $this->vGatewayCode = $vGatewayCode;
+
+        return $this;
+    }
+
+    public function getVGatewayStatus(): ?string
+    {
+        return $this->vGatewayStatus;
+    }
+
+    public function setVGatewayStatus(?string $vGatewayStatus): self
+    {
+        $this->vGatewayStatus = $vGatewayStatus;
+
+        return $this;
+    }
+
+    public function getDTotal()
+    {
+        return $this->dTotal;
+    }
+
+    public function setDTotal($dTotal): self
+    {
+        $this->dTotal = $dTotal;
+
+        return $this;
+    }
+
+    public function getVCurrency(): ?string
+    {
+        return $this->vCurrency;
+    }
+
+    public function setVCurrency(string $vCurrency): self
+    {
+        $this->vCurrency = $vCurrency;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    public function getFkPaymentMethod(): ?PaymentMethod
+    {
+        return $this->fkPaymentMethod;
+    }
+
+    public function setFkPaymentMethod(?PaymentMethod $fkPaymentMethod): self
+    {
+        $this->fkPaymentMethod = $fkPaymentMethod;
+
+        return $this;
+    }
 
 
 }

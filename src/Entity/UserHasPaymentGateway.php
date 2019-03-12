@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * UserHasPaymentGateway
@@ -45,16 +46,18 @@ class UserHasPaymentGateway
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="d_created_at", type="datetime", nullable=false)
+     * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt;
+    private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="d_updated_at", type="datetime", nullable=false)
+     * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt;
+    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \DateTime|null
@@ -82,6 +85,109 @@ class UserHasPaymentGateway
      * })
      */
     private $fkUser;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getVCode(): ?string
+    {
+        return $this->vCode;
+    }
+
+    public function setVCode(string $vCode): self
+    {
+        $this->vCode = $vCode;
+
+        return $this;
+    }
+
+    public function getVDeviceCode(): ?string
+    {
+        return $this->vDeviceCode;
+    }
+
+    public function setVDeviceCode(string $vDeviceCode): self
+    {
+        $this->vDeviceCode = $vDeviceCode;
+
+        return $this;
+    }
+
+    public function getBStatus(): ?bool
+    {
+        return $this->bStatus;
+    }
+
+    public function setBStatus(bool $bStatus): self
+    {
+        $this->bStatus = $bStatus;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    public function getFkPaymentGateway(): ?PaymentGateway
+    {
+        return $this->fkPaymentGateway;
+    }
+
+    public function setFkPaymentGateway(?PaymentGateway $fkPaymentGateway): self
+    {
+        $this->fkPaymentGateway = $fkPaymentGateway;
+
+        return $this;
+    }
+
+    public function getFkUser(): ?User
+    {
+        return $this->fkUser;
+    }
+
+    public function setFkUser(?User $fkUser): self
+    {
+        $this->fkUser = $fkUser;
+
+        return $this;
+    }
 
 
 }

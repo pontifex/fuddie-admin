@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Reward
@@ -25,6 +26,7 @@ class Reward
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -32,6 +34,7 @@ class Reward
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -51,6 +54,61 @@ class Reward
      * })
      */
     private $fkWaiter;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    public function getFkWaiter(): ?Waiter
+    {
+        return $this->fkWaiter;
+    }
+
+    public function setFkWaiter(?Waiter $fkWaiter): self
+    {
+        $this->fkWaiter = $fkWaiter;
+
+        return $this;
+    }
 
 
 }

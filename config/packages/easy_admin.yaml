@@ -1,0 +1,52 @@
+easy_admin:
+    entities:
+        Address:
+            class: App\Entity\Address
+        Badge:
+            class: App\Entity\Badge
+        Category:
+            class: App\Entity\Category
+        Company:
+            class: App\Entity\Company
+        DiscountType:
+            class: App\Entity\DiscountType
+        MiniGame:
+            class: App\Entity\MiniGame
+        MiniGameCategory:
+            class: App\Entity\MiniGameCategory
+        Order:
+            class: App\Entity\Order
+        OrderStatus:
+            class: App\Entity\OrderStatus
+        OrderStatusHistory:
+            class: App\Entity\OrderStatusHistory
+        Parameter:
+            class: App\Entity\Parameter
+        ParameterType:
+            class: App\Entity\ParameterType
+        Payment:
+            class: App\Entity\Payment
+        PaymentGateway:
+            class: App\Entity\PaymentGateway
+        PaymentHistory:
+            class: App\Entity\PaymentHistory
+        PaymentMethod:
+            class: App\Entity\PaymentMethod
+        PaymentMethodType:
+            class: App\Entity\PaymentMethodType
+        Restaurant:
+            class: App\Entity\Restaurant
+        RestaurantHasMiniGame:
+            class: App\Entity\RestaurantHasMiniGame
+        RestaurantImage:
+            class: App\Entity\RestaurantImage
+        RestaurantSchedule:
+            class: App\Entity\RestaurantSchedule
+        Reward:
+            class: App\Entity\Reward
+        User:
+            class: App\Entity\User
+        UserHasPaymentGateway:
+            class: App\Entity\UserHasPaymentGateway
+        Waiter:
+            class: App\Entity\Waiter

@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * MiniGame
@@ -60,6 +63,7 @@ class MiniGame
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -67,6 +71,7 @@ class MiniGame
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -108,6 +113,147 @@ class MiniGame
     public function __construct()
     {
         $this->miniGameCategory = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getVName(): ?string
+    {
+        return $this->vName;
+    }
+
+    public function setVName(string $vName): self
+    {
+        $this->vName = $vName;
+
+        return $this;
+    }
+
+    public function getVCode(): ?string
+    {
+        return $this->vCode;
+    }
+
+    public function setVCode(string $vCode): self
+    {
+        $this->vCode = $vCode;
+
+        return $this;
+    }
+
+    public function getIBadgeGoal(): ?int
+    {
+        return $this->iBadgeGoal;
+    }
+
+    public function setIBadgeGoal(int $iBadgeGoal): self
+    {
+        $this->iBadgeGoal = $iBadgeGoal;
+
+        return $this;
+    }
+
+    public function getVDescription(): ?string
+    {
+        return $this->vDescription;
+    }
+
+    public function setVDescription(string $vDescription): self
+    {
+        $this->vDescription = $vDescription;
+
+        return $this;
+    }
+
+    public function getBStatus(): ?bool
+    {
+        return $this->bStatus;
+    }
+
+    public function setBStatus(bool $bStatus): self
+    {
+        $this->bStatus = $bStatus;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    public function getFkBadge(): ?Badge
+    {
+        return $this->fkBadge;
+    }
+
+    public function setFkBadge(?Badge $fkBadge): self
+    {
+        $this->fkBadge = $fkBadge;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MiniGameCategory[]
+     */
+    public function getMiniGameCategory(): Collection
+    {
+        return $this->miniGameCategory;
+    }
+
+    public function addMiniGameCategory(MiniGameCategory $miniGameCategory): self
+    {
+        if (!$this->miniGameCategory->contains($miniGameCategory)) {
+            $this->miniGameCategory[] = $miniGameCategory;
+        }
+
+        return $this;
+    }
+
+    public function removeMiniGameCategory(MiniGameCategory $miniGameCategory): self
+    {
+        if ($this->miniGameCategory->contains($miniGameCategory)) {
+            $this->miniGameCategory->removeElement($miniGameCategory);
+        }
+
+        return $this;
     }
 
 }

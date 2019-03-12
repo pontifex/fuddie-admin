@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Badge
@@ -53,6 +56,7 @@ class Badge
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -60,6 +64,7 @@ class Badge
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -83,6 +88,125 @@ class Badge
     public function __construct()
     {
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getVName(): ?string
+    {
+        return $this->vName;
+    }
+
+    public function setVName(string $vName): self
+    {
+        $this->vName = $vName;
+
+        return $this;
+    }
+
+    public function getVDescription(): ?string
+    {
+        return $this->vDescription;
+    }
+
+    public function setVDescription(string $vDescription): self
+    {
+        $this->vDescription = $vDescription;
+
+        return $this;
+    }
+
+    public function getVImage(): ?string
+    {
+        return $this->vImage;
+    }
+
+    public function setVImage(string $vImage): self
+    {
+        $this->vImage = $vImage;
+
+        return $this;
+    }
+
+    public function getBStatus(): ?bool
+    {
+        return $this->bStatus;
+    }
+
+    public function setBStatus(bool $bStatus): self
+    {
+        $this->bStatus = $bStatus;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
+            $user->addBadge($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->user->contains($user)) {
+            $this->user->removeElement($user);
+            $user->removeBadge($this);
+        }
+
+        return $this;
     }
 
 }
