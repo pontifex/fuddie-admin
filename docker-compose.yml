@@ -1,0 +1,35 @@
+version: '2.2'
+
+services:
+    mysql:
+        container_name: container_mysql_fuddie_admin
+        image: mysql:5.7
+        volumes:
+            - "~/fuddie_admin/db:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+        ports:
+            - "3306:3306"
+    php:
+        container_name: container_phpfpm_fuddie_admin
+        build:
+            context: docker/php7-fpm
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ${FUDDIE_ADMIN_APP_PATH}:/var/www/fuddie_admin
+    nginx:
+        container_name: container_nginx_fuddie_admin
+        build:
+            context: docker/nginx
+            args:
+                MAX_EXECUTION_TIME: ${MAX_EXECUTION_TIME}
+                SERVER_NAME: ${SERVER_NAME}
+        ports:
+            - "80:80"
+        volumes_from:
+            - php
+        volumes:
+            - "~/fuddie_admin/logs/nginx/:/var/log/nginx"
