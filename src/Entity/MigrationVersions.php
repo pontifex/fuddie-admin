@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * MigrationVersions
@@ -27,6 +28,23 @@ class MigrationVersions
      * @ORM\Column(name="executed_at", type="datetime_immutable", nullable=false)
      */
     private $executedAt;
+
+    public function getVersion(): ?string
+    {
+        return $this->version;
+    }
+
+    public function getExecutedAt(): ?\DateTimeImmutable
+    {
+        return $this->executedAt;
+    }
+
+    public function setExecutedAt(\DateTimeImmutable $executedAt): self
+    {
+        $this->executedAt = $executedAt;
+
+        return $this;
+    }
 
 
 }

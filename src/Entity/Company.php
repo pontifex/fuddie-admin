@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Company
@@ -74,6 +75,7 @@ class Company
      * @var \DateTime
      *
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="create")
      */
     private $dCreatedAt = 'CURRENT_TIMESTAMP';
 
@@ -81,6 +83,7 @@ class Company
      * @var \DateTime
      *
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     * @Gedmo\Timestampable(on="update")
      */
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
@@ -90,6 +93,133 @@ class Company
      * @ORM\Column(name="d_deleted_at", type="datetime", nullable=true)
      */
     private $dDeletedAt;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getVName(): ?string
+    {
+        return $this->vName;
+    }
+
+    public function setVName(string $vName): self
+    {
+        $this->vName = $vName;
+
+        return $this;
+    }
+
+    public function getVWebsite(): ?string
+    {
+        return $this->vWebsite;
+    }
+
+    public function setVWebsite(?string $vWebsite): self
+    {
+        $this->vWebsite = $vWebsite;
+
+        return $this;
+    }
+
+    public function getVLogo(): ?string
+    {
+        return $this->vLogo;
+    }
+
+    public function setVLogo(?string $vLogo): self
+    {
+        $this->vLogo = $vLogo;
+
+        return $this;
+    }
+
+    public function getVAddress(): ?string
+    {
+        return $this->vAddress;
+    }
+
+    public function setVAddress(string $vAddress): self
+    {
+        $this->vAddress = $vAddress;
+
+        return $this;
+    }
+
+    public function getVPhone(): ?string
+    {
+        return $this->vPhone;
+    }
+
+    public function setVPhone(string $vPhone): self
+    {
+        $this->vPhone = $vPhone;
+
+        return $this;
+    }
+
+    public function getJSettings(): ?array
+    {
+        return $this->jSettings;
+    }
+
+    public function setJSettings(?array $jSettings): self
+    {
+        $this->jSettings = $jSettings;
+
+        return $this;
+    }
+
+    public function getBStatus(): ?bool
+    {
+        return $this->bStatus;
+    }
+
+    public function setBStatus(bool $bStatus): self
+    {
+        $this->bStatus = $bStatus;
+
+        return $this;
+    }
+
+    public function getDCreatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dCreatedAt instanceof \DateTimeInterface || is_null($this->dCreatedAt))
+            ? $this->dCreatedAt : new \DateTime();
+    }
+
+    public function setDCreatedAt(\DateTimeInterface $dCreatedAt): self
+    {
+        $this->dCreatedAt = $dCreatedAt;
+
+        return $this;
+    }
+
+    public function getDUpdatedAt(): ?\DateTimeInterface
+    {
+        return ($this->dUpdatedAt instanceof \DateTimeInterface || is_null($this->dUpdatedAt))
+            ? $this->dUpdatedAt : new \DateTime();
+    }
+
+    public function setDUpdatedAt(\DateTimeInterface $dUpdatedAt): self
+    {
+        $this->dUpdatedAt = $dUpdatedAt;
+
+        return $this;
+    }
+
+    public function getDDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->dDeletedAt;
+    }
+
+    public function setDDeletedAt(?\DateTimeInterface $dDeletedAt): self
+    {
+        $this->dDeletedAt = $dDeletedAt;
+
+        return $this;
+    }
 
 
 }
