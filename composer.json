@@ -1,0 +1,20 @@
+{
+    "name": "fuddie_admin",
+    "description": "Administration application - fuddie",
+    "keywords": ["fuddie", "administration"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "7.2.*"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
