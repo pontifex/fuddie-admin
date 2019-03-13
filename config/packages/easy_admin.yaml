@@ -1,7 +1,12 @@
 easy_admin:
+    user:
+        display_avatar: false
+        name_property_path: 'email'
     entities:
         Address:
             class: App\Entity\Address
+        Admin:
+            class: App\Entity\Admin
         Badge:
             class: App\Entity\Badge
         Category:
