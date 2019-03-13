@@ -74,7 +74,7 @@ class Admin implements UserInterface
         }
 
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ANY_USER';
 
         return array_unique($roles);
     }
