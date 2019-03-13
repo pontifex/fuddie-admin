@@ -1,57 +1,37 @@
 easy_admin:
+    design:
+        menu:
+            - Admin
+            - Company
+            - MiniGame
+            - { entity: 'Order', default: true }
+            - Payment
+            - Restaurant
+            - Waiter
+        templates:
+            menu: 'easyadmin/menu.html.twig'
     user:
         display_avatar: false
         name_property_path: 'email'
     entities:
-        Address:
-            class: App\Entity\Address
         Admin:
             class: App\Entity\Admin
-        Badge:
-            class: App\Entity\Badge
-        Category:
-            class: App\Entity\Category
+            controller: 'App\Controller\AdminController'
         Company:
             class: App\Entity\Company
-        DiscountType:
-            class: App\Entity\DiscountType
+            controller: 'App\Controller\CompanyController'
         MiniGame:
             class: App\Entity\MiniGame
-        MiniGameCategory:
-            class: App\Entity\MiniGameCategory
+            controller: 'App\Controller\MiniGameController'
         Order:
             class: App\Entity\Order
-        OrderStatus:
-            class: App\Entity\OrderStatus
-        OrderStatusHistory:
-            class: App\Entity\OrderStatusHistory
-        Parameter:
-            class: App\Entity\Parameter
-        ParameterType:
-            class: App\Entity\ParameterType
+            controller: 'App\Controller\OrderController'
         Payment:
             class: App\Entity\Payment
-        PaymentGateway:
-            class: App\Entity\PaymentGateway
-        PaymentHistory:
-            class: App\Entity\PaymentHistory
-        PaymentMethod:
-            class: App\Entity\PaymentMethod
-        PaymentMethodType:
-            class: App\Entity\PaymentMethodType
+            controller: 'App\Controller\PaymentController'
         Restaurant:
             class: App\Entity\Restaurant
-        RestaurantHasMiniGame:
-            class: App\Entity\RestaurantHasMiniGame
-        RestaurantImage:
-            class: App\Entity\RestaurantImage
-        RestaurantSchedule:
-            class: App\Entity\RestaurantSchedule
-        Reward:
-            class: App\Entity\Reward
-        User:
-            class: App\Entity\User
-        UserHasPaymentGateway:
-            class: App\Entity\UserHasPaymentGateway
+            controller: 'App\Controller\RestaurantController'
         Waiter:
             class: App\Entity\Waiter
+            controller: 'App\Controller\WaiterController'

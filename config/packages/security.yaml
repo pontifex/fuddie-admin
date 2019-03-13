@@ -27,11 +27,19 @@ security:
             # http_basic: true
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: true
+            form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: [ROLE_COMPANY_ADMIN, ROLE_RESTAURANT_ADMIN, ROLE_CASHIER] }
+    role_hierarchy:
+        ROLE_ANY_USER: [ROLE_ANY_USER]
+        ROLE_CASHIER: [ROLE_ANY_USER]
+        ROLE_RESTAURANT_ADMIN: [ROLE_ANY_USER]
+        ROLE_COMPANY_ADMIN: [ROLE_ANY_USER]
+        ROLE_SUPER_ADMIN: [ROLE_COMPANY_ADMIN, ROLE_RESTAURANT_ADMIN, ROLE_CASHIER, ROLE_ANY_USER]
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: false
