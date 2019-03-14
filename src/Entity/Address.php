@@ -242,6 +242,8 @@ class Address
 
     public function __toString()
     {
-        return $this->getVStreet() . ', ' . $this->getVPostalCode() . ' ' . $this->getVCity() . ', ' . $this->getVCountry();
+        return $this->getVStreet() . ', ' . $this->getVPostalCode() . ' ' . $this->getVCity() . ', ' . $this->getVCountry() . ' (' . $this->getId() . ')';
     }
+
+
 }

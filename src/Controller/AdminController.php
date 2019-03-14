@@ -46,4 +46,11 @@ class AdminController extends EasyAdminController
 
         return parent::deleteAction();
     }
+
+    protected function showAction()
+    {
+        $this->denyAccessUnlessGranted('show', Admin::class);
+
+        return parent::showAction();
+    }
 }

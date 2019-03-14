@@ -3,12 +3,12 @@
 namespace App\Security;
 
 use App\Entity\Admin;
-use App\Entity\Company;
+use App\Entity\Category;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class CompanyEntityVoter extends Voter
+class CategoryEntityVoter extends Voter
 {
     private const ACTION_DELETE = 'delete';
     private const ACTION_EDIT = 'edit';
@@ -29,7 +29,7 @@ class CompanyEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof Company || $subject === Company::class || $subject === 'Company');
+        return ($subject instanceof Category || $subject === Category::class || $subject === 'Category');
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -40,9 +40,6 @@ class CompanyEntityVoter extends Voter
         if (! $admin instanceof Admin) {
             return false;
         }
-
-        /** @var Company $company */
-        $company = $subject;
 
         switch ($attribute) {
             case self::ACTION_DELETE:

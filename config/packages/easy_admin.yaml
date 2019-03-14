@@ -1,7 +1,10 @@
 easy_admin:
+    list:
+        actions: ['edit', 'search', 'show']
     design:
         menu:
             - Admin
+            - Category
             - Company
             - MiniGame
             - { entity: 'Order', default: true }
@@ -17,12 +20,36 @@ easy_admin:
         Admin:
             class: App\Entity\Admin
             controller: 'App\Controller\AdminController'
+            form:
+                fields:
+                - email
+                - password
+                - { property: 'roles', type: 'collection' }
+                - fkCompany
+                - fkRestaurant
+                - dCreatedAt
+                - dUpdatedAt
+        Category:
+            class: App\Entity\Category
+            controller: 'App\Controller\CategoryController'
         Company:
             class: App\Entity\Company
             controller: 'App\Controller\CompanyController'
         MiniGame:
             class: App\Entity\MiniGame
             controller: 'App\Controller\MiniGameController'
+            form:
+                fields:
+                - id
+                - vName
+                - vCode
+                - iBadgeGoal
+                - vDescription
+                - bStatus
+                - dCreatedAt
+                - dUpdatedAt
+                - fkBadge
+                - { property: 'miniGameCategory', type: 'collection' }
         Order:
             class: App\Entity\Order
             controller: 'App\Controller\OrderController'

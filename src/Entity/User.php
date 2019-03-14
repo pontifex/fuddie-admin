@@ -395,6 +395,8 @@ class User
 
     public function __toString()
     {
-        return $this->vEmail;
+        return $this->getVEmail() . ' (' . $this->getId() . ')';
     }
+
+
 }

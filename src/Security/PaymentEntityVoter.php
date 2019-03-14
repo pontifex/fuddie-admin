@@ -3,6 +3,7 @@
 namespace App\Security;
 
 use App\Entity\Admin;
+use App\Entity\Order;
 use App\Entity\Payment;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -15,6 +16,7 @@ class PaymentEntityVoter extends Voter
     private const ACTION_LIST = 'list';
     private const ACTION_NEW = 'new';
     private const ACTION_SEARCH = 'search';
+    private const ACTION_SHOW = 'show';
 
     /**
      * @var Security
@@ -51,9 +53,11 @@ class PaymentEntityVoter extends Voter
             case self::ACTION_LIST:
                 return $this->canList();
             case self::ACTION_NEW:
-                return $this->canNew($payment, $admin);
+                return $this->canNew();
             case self::ACTION_SEARCH:
-                return $this->canSearch($payment, $admin);
+                return $this->canSearch();
+            case self::ACTION_SHOW:
+                return $this->canShow($payment, $admin);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -61,30 +65,106 @@ class PaymentEntityVoter extends Voter
 
     private function canDelete(Payment $payment, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        ) {
+            return true;
+        }
+
+        /** @var Order $order */
+        foreach ($payment->getOrders() as $order) {
+            if (is_null($order)
+                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            ) {
+                continue;
+            }
+
+            // owner restaurant
+            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+            ) {
+                return true;
+            }
+        }
+
         return false;
     }
 
     private function canEdit(Payment $payment, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        ) {
+            return true;
+        }
+
+        /** @var Order $order */
+        foreach ($payment->getOrders() as $order) {
+            if (is_null($order)
+                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            ) {
+                continue;
+            }
+
+            // owner restaurant
+            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+            ) {
+                return true;
+            }
+        }
+
         return false;
+    }
+
+    private function canNew()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
+    }
+
+    private function canSearch()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_CASHIER'));
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
     }
 
-    private function canNew(Payment $payment, Admin $admin)
+    private function canShow(Payment $payment, Admin $admin)
     {
-        // @todo implement me
-        return false;
-    }
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        ) {
+            return true;
+        }
 
-    private function canSearch(Payment $payment, Admin $admin)
-    {
-        // @todo implement me
+        /** @var Order $order */
+        foreach ($payment->getOrders() as $order) {
+            if (is_null($order)
+                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            ) {
+                continue;
+            }
+
+            // owner restaurant
+            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+            ) {
+                return true;
+            }
+        }
+
         return false;
     }
 }

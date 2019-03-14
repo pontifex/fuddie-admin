@@ -209,4 +209,10 @@ class MiniGameCategory
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getVName() . ' (' . $this->getId() . ')';
+    }
+
+
 }
