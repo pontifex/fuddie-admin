@@ -108,6 +108,17 @@ class MiniGame
     private $miniGameCategory;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\ManyToMany(targetEntity="Restaurant")
+     * @ORM\JoinTable(name="restaurant_has_mini_game",
+     *      joinColumns={@ORM\JoinColumn(name="fk_game", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="fk_restaurant", referencedColumnName="id")}
+     *      )
+     */
+    private $restaurants;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -255,5 +266,19 @@ class MiniGame
 
         return $this;
     }
+
+    /**
+     * @return Collection|MiniGameCategory[]
+     */
+    public function getRestaurants(): Collection
+    {
+        return $this->restaurants;
+    }
+
+    public function __toString()
+    {
+        return $this->getVName() . ' (' . $this->getId() . ')';
+    }
+
 
 }

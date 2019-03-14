@@ -15,6 +15,7 @@ class OrderEntityVoter extends Voter
     private const ACTION_LIST = 'list';
     private const ACTION_NEW = 'new';
     private const ACTION_SEARCH = 'search';
+    private const ACTION_SHOW = 'show';
 
     /**
      * @var Security
@@ -51,9 +52,11 @@ class OrderEntityVoter extends Voter
             case self::ACTION_LIST:
                 return $this->canList();
             case self::ACTION_NEW:
-                return $this->canNew($order, $admin);
+                return $this->canNew();
             case self::ACTION_SEARCH:
-                return $this->canSearch($order, $admin);
+                return $this->canSearch();
+            case self::ACTION_SHOW:
+                return $this->canShow($order, $admin);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -61,30 +64,126 @@ class OrderEntityVoter extends Voter
 
     private function canDelete(Order $order, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        if (is_null($order->getFkRestaurant())
+            && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))) {
+            return true;
+        }
+
+        // owner of restaurant
+        if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+        ) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
+        if ($this->security->isGranted('ROLE_CASHIER')) {
+            return true;
+        }
+
         return false;
     }
 
     private function canEdit(Order $order, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        if (is_null($order->getFkRestaurant())
+            && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))) {
+            return true;
+        }
+
+        // owner of restaurant
+        if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+        ) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
+        if ($this->security->isGranted('ROLE_CASHIER')) {
+            return true;
+        }
+
         return false;
+    }
+
+
+
+    private function canNew()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
+    }
+
+    private function canSearch()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_COMPANY_ADMIN'));
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+        );
     }
 
-    private function canNew(Order $order, Admin $admin)
+    private function canShow(Order $order, Admin $admin)
     {
-        // @todo implement me
-        return false;
-    }
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
 
-    private function canSearch(Order $order, Admin $admin)
-    {
-        // @todo implement me
+        if (is_null($order->getFkRestaurant())
+            && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))) {
+            return true;
+        }
+
+        // owner of restaurant
+        if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+        ) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
+        if ($this->security->isGranted('ROLE_CASHIER')) {
+            return true;
+        }
+
         return false;
     }
 }

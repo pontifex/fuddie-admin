@@ -14,6 +14,7 @@ class AdminEntityVoter extends Voter
     private const ACTION_LIST = 'list';
     private const ACTION_NEW = 'new';
     private const ACTION_SEARCH = 'search';
+    private const ACTION_SHOW = 'show';
 
     /**
     * @var Security
@@ -50,6 +51,8 @@ class AdminEntityVoter extends Voter
                 return $this->canNew();
             case self::ACTION_SEARCH:
                 return $this->canSearch();
+            case self::ACTION_SHOW:
+                return $this->canShow();
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -85,6 +88,11 @@ class AdminEntityVoter extends Voter
     }
 
     private function canSearch()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+    }
+
+    private function canShow()
     {
         return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
     }

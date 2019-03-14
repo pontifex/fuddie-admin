@@ -15,6 +15,7 @@ class RestaurantEntityVoter extends Voter
     private const ACTION_LIST = 'list';
     private const ACTION_NEW = 'new';
     private const ACTION_SEARCH = 'search';
+    private const ACTION_SHOW = 'show';
 
     /**
      * @var Security
@@ -51,9 +52,11 @@ class RestaurantEntityVoter extends Voter
             case self::ACTION_LIST:
                 return $this->canList();
             case self::ACTION_NEW:
-                return $this->canNew($restaurant, $admin);
+                return $this->canNew();
             case self::ACTION_SEARCH:
-                return $this->canSearch($restaurant, $admin);
+                return $this->canSearch();
+            case self::ACTION_SHOW:
+                return $this->canShow($restaurant, $admin);
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -61,30 +64,88 @@ class RestaurantEntityVoter extends Voter
 
     private function canDelete(Restaurant $restaurant, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        // restaurants without company
+        if (is_null($restaurant->getFkCompany())
+            && $this->security->isGranted('ROLE_COMPANY_ADMIN')) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
         return false;
     }
 
     private function canEdit(Restaurant $restaurant, Admin $admin)
     {
-        // @todo implement me
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        // restaurants without company
+        if (is_null($restaurant->getFkCompany())
+            && $this->security->isGranted('ROLE_COMPANY_ADMIN')) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
         return false;
+    }
+
+    private function canNew()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        );
+    }
+
+    private function canSearch()
+    {
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        );
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_COMPANY_ADMIN'));
+        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        );
     }
 
-    private function canNew(Restaurant $restaurant, Admin $admin)
+    private function canShow(Restaurant $restaurant, Admin $admin)
     {
-        // @todo implement me
-        return false;
-    }
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
 
-    private function canSearch(Restaurant $restaurant, Admin $admin)
-    {
-        // @todo implement me
+        // restaurants without company
+        if (is_null($restaurant->getFkCompany())
+            && $this->security->isGranted('ROLE_COMPANY_ADMIN')) {
+            return true;
+        }
+
+        // owner of company to which restaurant belongs
+        if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+        ) {
+            return true;
+        }
+
         return false;
     }
 }

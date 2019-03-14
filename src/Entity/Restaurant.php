@@ -370,4 +370,10 @@ class Restaurant
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getVName() . ' (' . $this->getId() . ')';
+    }
+
+
 }

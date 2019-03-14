@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -82,6 +83,12 @@ class Payment
      * })
      */
     private $fkPaymentMethod;
+
+    /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="fkPayment")
+     */
+    private $orders;
 
     public function getId(): ?int
     {
@@ -184,6 +191,37 @@ class Payment
         $this->fkPaymentMethod = $fkPaymentMethod;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrders(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+        }
+
+        return $this;
+    }
+
+    public function removeOrders(Order $order): self
+    {
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getDTotal() . ' ' . $this->getVCurrency() . ' (' . $this->getId() . ')';
     }
 
 

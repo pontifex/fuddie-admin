@@ -107,5 +107,10 @@ class OrderStatus
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getVCode() . ' (' . $this->getId() . ')';
+    }
+
 
 }
