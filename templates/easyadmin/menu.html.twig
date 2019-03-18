@@ -43,7 +43,7 @@
                 {% set is_selected_menu = app.request.query.get('menuIndex')|default(-1) == loop.index0 %}
                 {% set is_selected_submenu = is_selected_menu and app.request.query.get('submenuIndex')|default(-1) != -1 %}
 
-                {% if is_granted('list', item.entity) %}
+                {% if item.type != 'entity' or is_granted('list', item.class) %}
                     <li class="{{ item.type == 'divider' ? 'header' }} {{ item.children is not empty ? 'treeview' }} {{ is_selected_menu ? 'active' }} {{ is_selected_submenu ? 'submenu-active' }}">
                         {{ helper.render_menu_item(item, _translation_domain) }}
 
