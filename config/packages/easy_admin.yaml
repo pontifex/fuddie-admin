@@ -12,8 +12,6 @@ easy_admin:
             - { entity: 'Payment', class: 'App\Entity\Payment' }
             - { entity: 'Restaurant', class: 'App\Entity\Restaurant' }
             - { entity: 'Waiter', class: 'App\Entity\Waiter' }
-        templates:
-            menu: 'easyadmin/menu.html.twig'
     user:
         display_avatar: false
         name_property_path: 'email'
