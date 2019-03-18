@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Company
+ * Company.
  *
  * @ORM\Table(name="company")
  * @ORM\Entity
@@ -223,8 +223,6 @@ class Company
 
     public function __toString()
     {
-        return $this->getVName() . ' (' . $this->getId() . ')';
+        return $this->getVName().' ('.$this->getId().')';
     }
-
-
 }

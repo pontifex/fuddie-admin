@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * DiscountType
+ * DiscountType.
  *
  * @ORM\Table(name="discount_type")
  * @ORM\Entity
@@ -106,6 +106,4 @@ class DiscountType
 
         return $this;
     }
-
-
 }

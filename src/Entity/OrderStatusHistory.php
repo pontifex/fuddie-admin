@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * OrderStatusHistory
+ * OrderStatusHistory.
  *
  * @ORM\Table(name="order_status_history", indexes={@ORM\Index(name="fk_order_status_history_order1_idx", columns={"fk_order"}), @ORM\Index(name="fk_order_status_history_order_status1_idx", columns={"fk_order_status"})})
  * @ORM\Entity
@@ -91,6 +91,4 @@ class OrderStatusHistory
 
         return $this;
     }
-
-
 }

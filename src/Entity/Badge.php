@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Badge
+ * Badge.
  *
  * @ORM\Table(name="badge")
  * @ORM\Entity
@@ -83,7 +82,7 @@ class Badge
     private $user;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -211,8 +210,6 @@ class Badge
 
     public function __toString(): string
     {
-        return $this->getVName() . ' (' . $this->getId() . ')';
+        return $this->getVName().' ('.$this->getId().')';
     }
-
-
 }

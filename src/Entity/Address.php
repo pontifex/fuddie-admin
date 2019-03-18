@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Address
+ * Address.
  *
  * @ORM\Table(name="address")
  * @ORM\Entity
@@ -242,8 +242,6 @@ class Address
 
     public function __toString()
     {
-        return $this->getVStreet() . ', ' . $this->getVPostalCode() . ' ' . $this->getVCity() . ', ' . $this->getVCountry() . ' (' . $this->getId() . ')';
+        return $this->getVStreet().', '.$this->getVPostalCode().' '.$this->getVCity().', '.$this->getVCountry().' ('.$this->getId().')';
     }
-
-
 }

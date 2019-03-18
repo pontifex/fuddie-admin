@@ -17,8 +17,8 @@ class AdminEntityVoter extends Voter
     private const ACTION_SHOW = 'show';
 
     /**
-    * @var Security
-    */
+     * @var Security
+     */
     private $security;
 
     public function __construct(Security $security)
@@ -28,7 +28,7 @@ class AdminEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof Admin || $subject === Admin::class || $subject === 'Admin');
+        return $subject instanceof Admin || Admin::class === $subject || 'Admin' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -36,7 +36,7 @@ class AdminEntityVoter extends Voter
         $admin = $token->getUser();
 
         /** @var Admin $admin */
-        if (! $admin instanceof Admin) {
+        if (!$admin instanceof Admin) {
             return false;
         }
 
@@ -60,7 +60,7 @@ class AdminEntityVoter extends Voter
 
     private function canDelete(Admin $subject, Admin $admin)
     {
-        if (! $this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!$this->security->isGranted('ROLE_SUPER_ADMIN')) {
             return false;
         }
 
@@ -74,26 +74,26 @@ class AdminEntityVoter extends Voter
 
     private function canEdit()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canNew()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canSearch()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canShow()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 }

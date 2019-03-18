@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * PaymentGateway
+ * PaymentGateway.
  *
  * @ORM\Table(name="payment_gateway")
  * @ORM\Entity
@@ -106,6 +106,4 @@ class PaymentGateway
 
         return $this;
     }
-
-
 }

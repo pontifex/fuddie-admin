@@ -67,6 +67,4 @@ class PaymentController extends EasyAdminController
 
         return parent::showAction();
     }
-
-
 }

@@ -30,7 +30,7 @@ class MiniGameEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof MiniGame || $subject === MiniGame::class || $subject === 'MiniGame');
+        return $subject instanceof MiniGame || MiniGame::class === $subject || 'MiniGame' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -38,7 +38,7 @@ class MiniGameEntityVoter extends Voter
         $admin = $token->getUser();
 
         /** @var Admin $admin */
-        if (! $admin instanceof Admin) {
+        if (!$admin instanceof Admin) {
             return false;
         }
 
@@ -115,23 +115,23 @@ class MiniGameEntityVoter extends Voter
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canNew()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canSearch()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canShow(MiniGame $miniGame, Admin $admin)

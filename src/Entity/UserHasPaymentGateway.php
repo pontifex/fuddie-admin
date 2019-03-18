@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * UserHasPaymentGateway
+ * UserHasPaymentGateway.
  *
  * @ORM\Table(name="user_has_payment_gateway", indexes={@ORM\Index(name="fk_user_has_payment_gateway_user1_idx", columns={"fk_user"}), @ORM\Index(name="fk_user_has_payment_gateway_payment_gateway1_idx", columns={"fk_payment_gateway"})})
  * @ORM\Entity
@@ -188,6 +188,4 @@ class UserHasPaymentGateway
 
         return $this;
     }
-
-
 }

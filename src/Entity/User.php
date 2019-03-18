@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * User
+ * User.
  *
  * @ORM\Table(name="user", uniqueConstraints={@ORM\UniqueConstraint(name="v_external_id_UNIQUE", columns={"v_external_id"})}, indexes={@ORM\Index(name="fk_user_address1_idx", columns={"fk_address"})})
  * @ORM\Entity
@@ -158,7 +157,7 @@ class User
     private $user1;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -375,7 +374,7 @@ class User
         return $this->user1;
     }
 
-    public function addUser1(User $user1): self
+    public function addUser1(self $user1): self
     {
         if (!$this->user1->contains($user1)) {
             $this->user1[] = $user1;
@@ -384,7 +383,7 @@ class User
         return $this;
     }
 
-    public function removeUser1(User $user1): self
+    public function removeUser1(self $user1): self
     {
         if ($this->user1->contains($user1)) {
             $this->user1->removeElement($user1);
@@ -395,8 +394,6 @@ class User
 
     public function __toString()
     {
-        return $this->getVEmail() . ' (' . $this->getId() . ')';
+        return $this->getVEmail().' ('.$this->getId().')';
     }
-
-
 }

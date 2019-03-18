@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Restaurant
+ * Restaurant.
  *
  * @ORM\Table(name="restaurant", indexes={@ORM\Index(name="fk_branch_company1_idx", columns={"fk_company"})})
  * @ORM\Entity
@@ -150,7 +149,7 @@ class Restaurant
     private $category;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -372,8 +371,6 @@ class Restaurant
 
     public function __toString()
     {
-        return $this->getVName() . ' (' . $this->getId() . ')';
+        return $this->getVName().' ('.$this->getId().')';
     }
-
-
 }

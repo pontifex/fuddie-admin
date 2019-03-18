@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * PaymentMethod
+ * PaymentMethod.
  *
  * @ORM\Table(name="payment_method", indexes={@ORM\Index(name="fk_payment_method_payment_method_type1_idx", columns={"fk_payment_method_type"}), @ORM\Index(name="fk_payment_method_user_has_payment_gateway1_idx", columns={"fk_user_has_payment_gateway"})})
  * @ORM\Entity

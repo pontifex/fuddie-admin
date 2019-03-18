@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Reward
+ * Reward.
  *
  * @ORM\Table(name="reward", indexes={@ORM\Index(name="fk_reward_waiter1_idx", columns={"fk_waiter"})})
  * @ORM\Entity
@@ -109,6 +109,4 @@ class Reward
 
         return $this;
     }
-
-
 }

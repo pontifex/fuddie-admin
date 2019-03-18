@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * RestaurantHasMiniGame
+ * RestaurantHasMiniGame.
  *
  * @ORM\Table(name="restaurant_has_mini_game", indexes={@ORM\Index(name="fk_restaurant_has_game_game1_idx", columns={"fk_game"}), @ORM\Index(name="fk_restaurant_has_game_restaurant1_idx", columns={"fk_restaurant"}), @ORM\Index(name="fk_restaurant_has_game_discount_type1_idx", columns={"fk_discount_type"})})
  * @ORM\Entity
@@ -172,6 +172,4 @@ class RestaurantHasMiniGame
 
         return $this;
     }
-
-
 }

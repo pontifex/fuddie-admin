@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * ParameterType
+ * ParameterType.
  *
  * @ORM\Table(name="parameter_type")
  * @ORM\Entity
@@ -125,6 +125,4 @@ class ParameterType
 
         return $this;
     }
-
-
 }

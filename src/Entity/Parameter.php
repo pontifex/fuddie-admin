@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Parameter
+ * Parameter.
  *
  * @ORM\Table(name="parameter", indexes={@ORM\Index(name="fk_parameter_parameter_type1_idx", columns={"fk_parameter_type"})})
  * @ORM\Entity
@@ -166,6 +166,4 @@ class Parameter
 
         return $this;
     }
-
-
 }
