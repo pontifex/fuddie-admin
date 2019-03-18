@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Order
+ * Order.
  *
  * @ORM\Table(name="`order`", indexes={@ORM\Index(name="fk_order_payment1_idx", columns={"fk_payment"}), @ORM\Index(name="fk_order_restaurant1_idx", columns={"fk_restaurant"}), @ORM\Index(name="fk_order_order_status1_idx", columns={"fk_order_status"}), @ORM\Index(name="fk_order_user1_idx", columns={"fk_user"})})
  * @ORM\Entity
@@ -349,8 +349,6 @@ class Order
 
     public function __toString()
     {
-        return $this->getVUuid() . ' (' . $this->getId() . ')';
+        return $this->getVUuid().' ('.$this->getId().')';
     }
-
-
 }

@@ -113,7 +113,7 @@ class Admin implements UserInterface
     {
         $roles = $this->roles;
 
-        if (! is_array($roles)) {
+        if (!is_array($roles)) {
             $roles = [];
         }
 
@@ -227,8 +227,6 @@ class Admin implements UserInterface
 
     public function __toString()
     {
-        return $this->getEmail() . ' (' . $this->getId() . ')';
+        return $this->getEmail().' ('.$this->getId().')';
     }
-
-
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Waiter
+ * Waiter.
  *
  * @ORM\Table(name="waiter", indexes={@ORM\Index(name="fk_waiter_restaurant1_idx", columns={"fk_restaurant"})})
  * @ORM\Entity
@@ -169,8 +169,6 @@ class Waiter
 
     public function __toString()
     {
-        return $this->getVName() . ' (' . $this->getId() . ')';
+        return $this->getVName().' ('.$this->getId().')';
     }
-
-
 }

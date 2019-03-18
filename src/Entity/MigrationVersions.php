@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * MigrationVersions
+ * MigrationVersions.
  *
  * @ORM\Table(name="migration_versions")
  * @ORM\Entity
@@ -45,6 +44,4 @@ class MigrationVersions
 
         return $this;
     }
-
-
 }

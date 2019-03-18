@@ -67,6 +67,4 @@ class RestaurantController extends EasyAdminController
 
         return parent::showAction();
     }
-
-
 }

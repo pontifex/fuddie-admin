@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * RestaurantImage
+ * RestaurantImage.
  *
  * @ORM\Table(name="restaurant_image", indexes={@ORM\Index(name="fk_restaurant_image_restaurant1_idx", columns={"fk_restaurant"})})
  * @ORM\Entity
@@ -147,6 +147,4 @@ class RestaurantImage
 
         return $this;
     }
-
-
 }

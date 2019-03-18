@@ -2,13 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * MiniGame
+ * MiniGame.
  *
  * @ORM\Table(name="mini_game", indexes={@ORM\Index(name="fk_game_badge1_idx", columns={"fk_badge"})})
  * @ORM\Entity
@@ -119,7 +118,7 @@ class MiniGame
     private $restaurants;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -277,8 +276,6 @@ class MiniGame
 
     public function __toString()
     {
-        return $this->getVName() . ' (' . $this->getId() . ')';
+        return $this->getVName().' ('.$this->getId().')';
     }
-
-
 }

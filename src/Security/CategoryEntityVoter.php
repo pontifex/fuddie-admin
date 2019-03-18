@@ -29,7 +29,7 @@ class CategoryEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof Category || $subject === Category::class || $subject === 'Category');
+        return $subject instanceof Category || Category::class === $subject || 'Category' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -37,7 +37,7 @@ class CategoryEntityVoter extends Voter
         $admin = $token->getUser();
 
         /** @var Admin $admin */
-        if (! $admin instanceof Admin) {
+        if (!$admin instanceof Admin) {
             return false;
         }
 
@@ -61,31 +61,31 @@ class CategoryEntityVoter extends Voter
 
     private function canDelete()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canEdit()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canNew()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canSearch()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 
     private function canShow()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN'));
+        return $this->security->isGranted('ROLE_SUPER_ADMIN');
     }
 }

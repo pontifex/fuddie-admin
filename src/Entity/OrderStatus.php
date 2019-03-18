@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * OrderStatus
+ * OrderStatus.
  *
  * @ORM\Table(name="order_status")
  * @ORM\Entity
@@ -109,8 +109,6 @@ class OrderStatus
 
     public function __toString()
     {
-        return $this->getVCode() . ' (' . $this->getId() . ')';
+        return $this->getVCode().' ('.$this->getId().')';
     }
-
-
 }

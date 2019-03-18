@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Payment
+ * Payment.
  *
  * @ORM\Table(name="payment", indexes={@ORM\Index(name="fk_payment_payment_method1_idx", columns={"fk_payment_method"})})
  * @ORM\Entity
@@ -221,8 +221,6 @@ class Payment
 
     public function __toString()
     {
-        return $this->getDTotal() . ' ' . $this->getVCurrency() . ' (' . $this->getId() . ')';
+        return $this->getDTotal().' '.$this->getVCurrency().' ('.$this->getId().')';
     }
-
-
 }

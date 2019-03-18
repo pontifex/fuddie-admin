@@ -30,7 +30,7 @@ class PaymentEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof Payment || $subject === Payment::class || $subject === 'Payment');
+        return $subject instanceof Payment || Payment::class === $subject || 'Payment' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -38,7 +38,7 @@ class PaymentEntityVoter extends Voter
         $admin = $token->getUser();
 
         /** @var Admin $admin */
-        if (! $admin instanceof Admin) {
+        if (!$admin instanceof Admin) {
             return false;
         }
 
@@ -119,26 +119,26 @@ class PaymentEntityVoter extends Voter
 
     private function canNew()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
             || $this->security->isGranted('ROLE_CASHIER')
-        );
+        ;
     }
 
     private function canSearch()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
             || $this->security->isGranted('ROLE_CASHIER')
-        );
+        ;
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
             || $this->security->isGranted('ROLE_CASHIER')
-        );
+        ;
     }
 
     private function canShow(Payment $payment, Admin $admin)

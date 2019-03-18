@@ -29,7 +29,7 @@ class RestaurantEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return ($subject instanceof Restaurant || $subject === Restaurant::class || $subject === 'Restaurant');
+        return $subject instanceof Restaurant || Restaurant::class === $subject || 'Restaurant' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -37,7 +37,7 @@ class RestaurantEntityVoter extends Voter
         $admin = $token->getUser();
 
         /** @var Admin $admin */
-        if (! $admin instanceof Admin) {
+        if (!$admin instanceof Admin) {
             return false;
         }
 
@@ -108,23 +108,23 @@ class RestaurantEntityVoter extends Voter
 
     private function canNew()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canSearch()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canList()
     {
-        return ($this->security->isGranted('ROLE_SUPER_ADMIN')
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
             || $this->security->isGranted('ROLE_COMPANY_ADMIN')
-        );
+        ;
     }
 
     private function canShow(Restaurant $restaurant, Admin $admin)

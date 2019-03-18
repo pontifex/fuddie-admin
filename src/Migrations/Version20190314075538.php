@@ -12,15 +12,15 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190314075538 extends AbstractMigration
 {
-    public function getDescription() : string
+    public function getDescription(): string
     {
         return '';
     }
 
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE `admin` ADD COLUMN `fk_company` INT(11) NULL DEFAULT NULL AFTER `id`, ADD COLUMN `fk_restaurant` INT(11) NULL DEFAULT NULL AFTER `fk_company`');
 
@@ -30,10 +30,10 @@ final class Version20190314075538 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_880E0D761BFBD8AC ON admin (fk_restaurant)');
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+        $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE admin DROP FOREIGN KEY FK_880E0D76BF903463');
         $this->addSql('ALTER TABLE admin DROP FOREIGN KEY FK_880E0D761BFBD8AC');
