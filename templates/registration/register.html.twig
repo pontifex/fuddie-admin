@@ -1,16 +1,66 @@
-{% extends 'base.html.twig' %}
+{% trans_default_domain easyadmin_config('translation_domain') %}
+{% extends easyadmin_config('design.templates.layout') %}
 
-{% block title %}Register{% endblock %}
+{% block body_class 'page-login' %}
 
-{% block body %}
-    <h1>Register</h1>
+{% block wrapper_wrapper %}
+    {% set _username_label = username_label is defined ? username_label|trans : 'login.username'|trans({}, 'EasyAdminBundle') %}
+    {% set _password_label = password_label is defined ? password_label|trans : 'login.password'|trans({}, 'EasyAdminBundle') %}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
+    <div class="login-wrapper">
+        <header class="main-header mb-4">
+            <div id="header-logo">
+                {% block header_logo %}
+                    <a class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
+                        {{ easyadmin_config('site_name')|raw }}
+                    </a>
+                {% endblock header_logo %}
+            </div>
+        </header>
 
-        <button class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+        {% if error|default(false) %}
+            <div class="w-100 alert alert-danger">
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+            </div>
+        {% endif %}
 
-    <a href="{{ path('app_login') }}">Click here if you already have account</a>
+        <section class="content">
+            {{ form_start(registrationForm) }}
+                <input type="hidden" id="registration_form__token" name="registration_form[_token]"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <input type="hidden" name="{{ target_path_parameter|default('_target_path') }}" value="{{ target_path|default(path('easyadmin')) }}" />
+
+                <div class="form-group field-text">
+                    {{ form_label(registrationForm.email, '', {'label_attr': {'class': 'form-control-label required'}}) }}
+                    <div class="form-widget">
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-error">
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
+
+                </div>
+
+                <div class="form-group field-password">
+                    {{ form_label(registrationForm.plainPassword, '', {'label_attr': {'class': 'form-control-label required'}}) }}
+                    <div class="form-widget">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+
+                    <div class="form-error">
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+
+                </div>
+
+                <div class="form-group field-button">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="this.form.submit(); this.disabled=true;">Register</button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </section>
+        <br /><a href="{{ path('app_login') }}">Click here if you already have account</a>
+    </div>
 {% endblock %}
