@@ -3,14 +3,15 @@ easy_admin:
         actions: ['edit', 'search', 'show']
     design:
         menu:
-            - Admin
-            - Category
-            - Company
-            - MiniGame
-            - { entity: 'Order', default: true }
-            - Payment
-            - Restaurant
-            - Waiter
+            - { label: 'Home', route: 'admin_home', default: true }
+            - { entity: 'Admin', class: 'App\Entity\Admin' }
+            - { entity: 'Category', class: 'App\Entity\Category' }
+            - { entity: 'Company', class: 'App\Entity\Company' }
+            - { entity: 'MiniGame', class: 'App\Entity\MiniGame' }
+            - { entity: 'Order', class: 'App\Entity\Order' }
+            - { entity: 'Payment', class: 'App\Entity\Payment' }
+            - { entity: 'Restaurant', class: 'App\Entity\Restaurant' }
+            - { entity: 'Waiter', class: 'App\Entity\Waiter' }
         templates:
             menu: 'easyadmin/menu.html.twig'
     user:
