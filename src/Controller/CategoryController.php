@@ -25,7 +25,7 @@ class CategoryController extends EasyAdminController
     {
         $this->denyAccessUnlessGranted('search', Category::class);
 
-        return parent::newAction();
+        return parent::searchAction();
     }
 
     protected function editAction()

@@ -25,7 +25,7 @@ class CompanyController extends EasyAdminController
     {
         $this->denyAccessUnlessGranted('search', Company::class);
 
-        return parent::newAction();
+        return parent::searchAction();
     }
 
     protected function editAction()

@@ -196,7 +196,7 @@ class Payment
     /**
      * @return Collection|Order[]
      */
-    public function getOrders(): Collection
+    public function getOrders(): ?Collection
     {
         return $this->orders;
     }
