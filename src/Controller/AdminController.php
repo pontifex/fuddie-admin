@@ -25,7 +25,7 @@ class AdminController extends EasyAdminController
     {
         $this->denyAccessUnlessGranted('search', Admin::class);
 
-        return parent::newAction();
+        return parent::searchAction();
     }
 
     protected function editAction()

@@ -31,7 +31,7 @@ class WaiterController extends EasyAdminController
 
         //@todo add filter to show only entities user has access to
 
-        return parent::newAction();
+        return parent::searchAction();
     }
 
     protected function editAction()

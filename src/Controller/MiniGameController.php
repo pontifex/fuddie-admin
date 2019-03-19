@@ -25,7 +25,7 @@ class MiniGameController extends EasyAdminController
     {
         $this->denyAccessUnlessGranted('search', MiniGame::class);
 
-        return parent::newAction();
+        return parent::searchAction();
     }
 
     protected function editAction()

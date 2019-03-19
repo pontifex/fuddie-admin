@@ -139,7 +139,7 @@
                             </div>
 
                             <section id="main" class="content-body">
-                                <h1>Welcome on Fuddie admin area.</h1>
+                                <h1 id="home_welcome_text">Welcome on Fuddie admin area.</h1>
 
                                 {% if not is_granted('list', 'App\\Entity\\Category')
                                     and not is_granted('list', 'App\\Entity\\Company')
@@ -149,7 +149,7 @@
                                     and not is_granted('list', 'App\\Entity\\Restaurant')
                                     and not is_granted('list', 'App\\Entity\\Waiter')
                                 %}
-                                    <h1>Please wait for admin to set up your privileges.</h1>
+                                    <h1 id="home_notice_text">Please wait for admin to set up your privileges.</h1>
                                 {% endif %}
                             </section>
                         </div>
