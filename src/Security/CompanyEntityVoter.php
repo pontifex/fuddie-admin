@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Entity\Company;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;

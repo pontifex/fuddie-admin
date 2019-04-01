@@ -41,7 +41,7 @@ class WaiterController extends EasyAdminController
         /** @var Waiter $waiter */
         $waiter = $easyadmin['item'];
 
-        $this->denyAccessUnlessGranted('delete', $waiter);
+        $this->denyAccessUnlessGranted('edit', $waiter);
 
         return parent::editAction();
     }

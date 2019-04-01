@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Entity\Order;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -75,14 +75,14 @@ class OrderEntityVoter extends Voter
 
         // owner of restaurant
         if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+            && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
         ) {
             return true;
         }
 
         // owner of company to which restaurant belongs
         if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+            && in_array($order->getFkRestaurant()->getFkCompany()->getId(), $admin->getCompanies())
         ) {
             return true;
         }
@@ -107,14 +107,14 @@ class OrderEntityVoter extends Voter
 
         // owner of restaurant
         if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+            && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
         ) {
             return true;
         }
 
         // owner of company to which restaurant belongs
         if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+            && in_array($order->getFkRestaurant()->getFkCompany()->getId(), $admin->getCompanies())
         ) {
             return true;
         }
@@ -166,14 +166,14 @@ class OrderEntityVoter extends Voter
 
         // owner of restaurant
         if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            && $order->getFkRestaurant()->getId() === $admin->getFkRestaurant()
+            && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
         ) {
             return true;
         }
 
         // owner of company to which restaurant belongs
         if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-            && $order->getFkRestaurant()->getFkCompany()->getId() === $admin->getFkCompany()
+            && in_array($order->getFkRestaurant()->getFkCompany()->getId(), $admin->getCompanies())
         ) {
             return true;
         }

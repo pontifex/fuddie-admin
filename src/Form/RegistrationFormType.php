@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;

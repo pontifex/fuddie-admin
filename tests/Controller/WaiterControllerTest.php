@@ -166,11 +166,11 @@ class WaiterControllerTest extends AbstractControllerTest
             ],
             [
                 '/admin/?action=edit&entity=Waiter&sortField=id&sortDirection=DESC&menuIndex=2&submenuIndex=-1&query=lucas&page=1&referer=%252Fadmin%252F%253Faction%253Dsearch%2526entity%253DWaiter%2526sortField%253Did%2526sortDirection%253DDESC%2526menuIndex%253D2%2526submenuIndex%253D-1%2526query%253Dlucas%2526page%253D1&id=1',
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_OK
             ],
             [
                 '/admin/?entity=Waiter&action=show&menuIndex=2&submenuIndex=-1&sortField=id&sortDirection=DESC&page=1&referer=%252Fadmin%252F%253Fentity%253DWaiter%2526action%253Dlist%2526menuIndex%253D2%2526submenuIndex%253D-1%2526sortField%253Did%2526sortDirection%253DDESC%2526page%253D1&id=1',
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_OK
             ]
         ];
     }
@@ -207,11 +207,11 @@ class WaiterControllerTest extends AbstractControllerTest
             ],
             [
                 '/admin/?action=edit&entity=Waiter&sortField=id&sortDirection=DESC&menuIndex=2&submenuIndex=-1&query=lucas&page=1&referer=%252Fadmin%252F%253Faction%253Dsearch%2526entity%253DWaiter%2526sortField%253Did%2526sortDirection%253DDESC%2526menuIndex%253D2%2526submenuIndex%253D-1%2526query%253Dlucas%2526page%253D1&id=1',
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_OK
             ],
             [
                 '/admin/?entity=Waiter&action=show&menuIndex=2&submenuIndex=-1&sortField=id&sortDirection=DESC&page=1&referer=%252Fadmin%252F%253Fentity%253DWaiter%2526action%253Dlist%2526menuIndex%253D2%2526submenuIndex%253D-1%2526sortField%253Did%2526sortDirection%253DDESC%2526page%253D1&id=1',
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_OK
             ]
         ];
     }

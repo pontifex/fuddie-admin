@@ -41,7 +41,7 @@ class OrderController extends EasyAdminController
         /** @var Order $order */
         $order = $easyadmin['item'];
 
-        $this->denyAccessUnlessGranted('delete', $order);
+        $this->denyAccessUnlessGranted('edit', $order);
 
         return parent::editAction();
     }

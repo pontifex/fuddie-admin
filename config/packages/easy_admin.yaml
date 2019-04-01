@@ -5,7 +5,7 @@ easy_admin:
     design:
         menu:
             - { label: 'Home', route: 'admin_home', default: true }
-            - { entity: 'Admin', class: 'App\Entity\Admin' }
+            - { entity: 'Admin', class: 'App\Entity\ACL\Admin' }
             - { entity: 'Category', class: 'App\Entity\Category' }
             - { entity: 'Company', class: 'App\Entity\Company' }
             - { entity: 'MiniGame', class: 'App\Entity\MiniGame' }
@@ -18,15 +18,15 @@ easy_admin:
         name_property_path: 'email'
     entities:
         Admin:
-            class: App\Entity\Admin
+            class: App\Entity\ACL\Admin
             controller: 'App\Controller\AdminController'
             form:
                 fields:
                 - email
                 - password
                 - { property: 'roles', type: 'collection' }
-                - fkCompany
-                - fkRestaurant
+                - { property: 'companies', type: 'collection' }
+                - { property: 'restaurants', type: 'collection' }
                 - dCreatedAt
                 - dUpdatedAt
         Category:

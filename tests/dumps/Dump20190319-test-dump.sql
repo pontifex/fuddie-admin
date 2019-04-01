@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.25, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: fuddie_admin_local
+-- Host: 127.0.0.1    Database: fuddie_local
 -- ------------------------------------------------------
 -- Server version	5.7.24
 
@@ -47,42 +47,6 @@ LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
 INSERT INTO `address` VALUES (1,'Perfect Street','Poznań','wielkopolska','Poland','61-625','',NULL,1,'2019-03-14 10:00:00','2019-03-14 10:00:00',NULL);
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `fk_company` int(11) DEFAULT NULL,
-  `fk_restaurant` int(11) DEFAULT NULL,
-  `email` varchar(180) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `roles` json NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `d_created_at` datetime NOT NULL,
-  `d_updated_at` datetime NOT NULL,
-  `d_deleted_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_880E0D76E7927C74` (`email`),
-  KEY `IDX_880E0D76BF903463` (`fk_company`),
-  KEY `IDX_880E0D761BFBD8AC` (`fk_restaurant`),
-  CONSTRAINT `FK_880E0D761BFBD8AC` FOREIGN KEY (`fk_restaurant`) REFERENCES `restaurant` (`id`),
-  CONSTRAINT `FK_880E0D76BF903463` FOREIGN KEY (`fk_company`) REFERENCES `company` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `admin`
---
-
-LOCK TABLES `admin` WRITE;
-/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,NULL,NULL,'admin@fuddie.com','[\"ROLE_SUPER_ADMIN\"]','$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q','2019-03-14 10:00:00','2019-03-14 10:00:00',NULL),(2,NULL,NULL,'user@fuddie.com','[\"ROLE_ANY_USER\"]','$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q','2019-03-14 10:00:00','2019-03-14 10:00:00',NULL),(3,NULL,NULL,'cashier@fuddie.com','[\"ROLE_CASHIER\"]','$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q','2019-03-18 20:04:15','2019-03-18 20:04:15',NULL),(4,NULL,1,'restaurant@fuddie.com','[\"ROLE_RESTAURANT_ADMIN\"]','$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q','2019-03-19 09:14:56','2019-03-19 09:14:56',NULL),(5,1,NULL,'company@fuddie.com','[\"ROLE_COMPANY_ADMIN\"]','$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q','2019-03-19 09:25:32','2019-03-19 09:25:32',NULL);
-/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

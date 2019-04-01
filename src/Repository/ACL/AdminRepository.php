@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\ACL;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Psr\Container\ContainerInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -14,9 +15,17 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class AdminRepository extends ServiceEntityRepository
 {
-    public function __construct(RegistryInterface $registry)
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    public function __construct(RegistryInterface $registry, ContainerInterface $container)
     {
         parent::__construct($registry, Admin::class);
+
+        $this->container = $container;
+        $this->_em = $this->container->get('doctrine.orm.acl_entity_manager');
     }
 
     // /**

@@ -39,7 +39,7 @@ class PaymentController extends EasyAdminController
         /** @var Payment $payment */
         $payment = $easyadmin['item'];
 
-        $this->denyAccessUnlessGranted('delete', $payment);
+        $this->denyAccessUnlessGranted('edit', $payment);
 
         return parent::editAction();
     }

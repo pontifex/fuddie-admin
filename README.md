@@ -11,9 +11,14 @@ Steps:
 * ```cd fuddie_admin```
 * ```docker-compose up```
 * ```docker exec -i container_phpfpm_fuddie_admin composer install```
-* ```docker exec -i container_phpfpm_fuddie_admin php bin/console doctrine:migrations:migrate```
+* ```docker exec -i container_phpfpm_fuddie_admin php bin/console doctrine:migrations:migrate --em=acl```
 
 After those steps app should be available on ```http://localhost```
+
+### Multi db
+Two databases are set up locally, one is `fuddie_local` (port 3305 on your localhost) for original Fuddie content and
+second is `fuddie_admin_local` (port 3306 on your localhost) for ACL related stuff. Please overwrite config when 
+deploying to staging / production.
 
 ### Functional tests
 * ```docker exec -i container_phpfpm_fuddie_admin ./bin/phpunit --group=admin```

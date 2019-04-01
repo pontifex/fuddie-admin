@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Entity\ACL;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AdminRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ACL\AdminRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
 class Admin implements UserInterface
@@ -19,26 +19,6 @@ class Admin implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    /**
-     * @var \Company
-     *
-     * @ORM\ManyToOne(targetEntity="Company")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_company", referencedColumnName="id")
-     * })
-     */
-    private $fkCompany;
-
-    /**
-     * @var \Restaurant
-     *
-     * @ORM\ManyToOne(targetEntity="Restaurant")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_restaurant", referencedColumnName="id")
-     * })
-     */
-    private $fkRestaurant;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -55,6 +35,16 @@ class Admin implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $companies = [];
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $restaurants = [];
 
     /**
      * @var \DateTime
@@ -169,26 +159,38 @@ class Admin implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFkCompany(): ?Company
+    public function getCompanies(): array
     {
-        return $this->fkCompany;
+        $companies = $this->companies;
+
+        if (!is_array($companies)) {
+            $companies = [];
+        }
+
+        return array_unique($companies);
     }
 
-    public function setFkCompany(?Company $fkCompany): self
+    public function setCompanies(array $companies): self
     {
-        $this->fkCompany = $fkCompany;
+        $this->companies = $companies;
 
         return $this;
     }
 
-    public function getFkRestaurant(): ?Restaurant
+    public function getRestaurants(): array
     {
-        return $this->fkRestaurant;
+        $restaurants = $this->restaurants;
+
+        if (!is_array($restaurants)) {
+            $restaurants = [];
+        }
+
+        return array_unique($restaurants);
     }
 
-    public function setFkRestaurant(?Restaurant $fkRestaurant): self
+    public function setRestaurants(array $restaurants): self
     {
-        $this->fkRestaurant = $fkRestaurant;
+        $this->restaurants = $restaurants;
 
         return $this;
     }
