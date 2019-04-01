@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Form\RegistrationFormType;
 use App\Security\AppCustomAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +35,7 @@ class RegistrationController extends AbstractController
             $user->setDCreatedAt($now);
             $user->setDUpdatedAt($now);
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager('acl');
             $entityManager->persist($user);
             $entityManager->flush();
 

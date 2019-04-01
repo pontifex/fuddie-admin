@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Entity\Company;
 use App\Entity\Restaurant;
 use Symfony\Bundle\FrameworkBundle\Client;
@@ -98,9 +98,7 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
         $admin->setRoles(['ROLE_RESTAURANT_ADMIN']);
 
-        $restaurant = new Restaurant();
-        $restaurant->setId(1);
-        $admin->setFkRestaurant($restaurant);
+        $admin->setRestaurants([1]);
 
         $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_RESTAURANT_ADMIN']);
         $session->set('_security_'.$firewallContext, serialize($token));
@@ -123,9 +121,7 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
         $admin->setRoles(['ROLE_COMPANY_ADMIN']);
 
-        $company = new Company();
-        $company->setId(1);
-        $admin->setFkCompany($company);
+        $admin->setCompanies([1]);
 
         $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_COMPANY_ADMIN']);
         $session->set('_security_'.$firewallContext, serialize($token));

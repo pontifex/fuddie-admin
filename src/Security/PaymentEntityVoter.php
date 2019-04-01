@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Entity\Order;
 use App\Entity\Payment;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -81,7 +81,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }
@@ -108,7 +108,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }
@@ -159,7 +159,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && $order->getFkRestaurant()->getId() === $admin->getFkCompany()
+                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }

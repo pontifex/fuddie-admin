@@ -39,7 +39,7 @@ class RestaurantController extends EasyAdminController
         /** @var Restaurant $restaurant */
         $restaurant = $easyadmin['item'];
 
-        $this->denyAccessUnlessGranted('delete', $restaurant);
+        $this->denyAccessUnlessGranted('edit', $restaurant);
 
         return parent::editAction();
     }

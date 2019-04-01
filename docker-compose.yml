@@ -1,17 +1,28 @@
 version: '2.2'
 
 services:
-    mysql:
+    mysql-admin:
         container_name: container_mysql_fuddie_admin
         image: mysql:5.7
         volumes:
             - "~/fuddie_admin/db:/var/lib/mysql"
         environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ADMIN_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_ADMIN_DATABASE}
+            MYSQL_USER: ${MYSQL_ADMIN_USER}
+        ports:
+            - "3306:3306"
+    mysql:
+        container_name: container_mysql_fuddie
+        image: mysql:5.7
+        volumes:
+        - "~/fuddie/db:/var/lib/mysql"
+        environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
         ports:
-            - "3306:3306"
+        - "3305:3306"
     php:
         container_name: container_phpfpm_fuddie_admin
         build:

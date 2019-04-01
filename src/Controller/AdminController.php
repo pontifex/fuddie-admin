@@ -2,11 +2,33 @@
 
 namespace App\Controller;
 
-use App\Entity\Admin;
+use App\EasyAdmin\AclQueryBuilder;
+use App\Entity\ACL\Admin;
+use EasyCorp\Bundle\EasyAdminBundle\Configuration\ConfigManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
+use EasyCorp\Bundle\EasyAdminBundle\Search\Autocomplete;
+use EasyCorp\Bundle\EasyAdminBundle\Search\Paginator;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class AdminController extends EasyAdminController
 {
+    public static function getSubscribedServices(): array
+    {
+        $result = parent::getSubscribedServices() + [
+            'easyadmin.autocomplete' => Autocomplete::class,
+            'easyadmin.config.manager' => ConfigManager::class,
+            'easyadmin.paginator' => Paginator::class,
+            'easyadmin.property_accessor' => PropertyAccessorInterface::class,
+            'event_dispatcher' => EventDispatcherInterface::class,
+        ];
+
+        // for Admin entity we always set this QueryBuilder (uses correct database)
+        $result['easyadmin.query_builder'] = AclQueryBuilder::class;
+
+        return $result;
+    }
+
     protected function listAction()
     {
         $this->denyAccessUnlessGranted('list', Admin::class);
@@ -19,6 +41,14 @@ class AdminController extends EasyAdminController
         $this->denyAccessUnlessGranted('new', Admin::class);
 
         return parent::newAction();
+    }
+
+    protected function persistEntity($entity)
+    {
+        $em = $this->getDoctrine()->getManager('acl');
+
+        $em->persist($entity);
+        $em->flush();
     }
 
     protected function searchAction()
@@ -35,6 +65,14 @@ class AdminController extends EasyAdminController
         return parent::editAction();
     }
 
+    protected function updateEntity($entity)
+    {
+        $em = $this->getDoctrine()->getManager('acl');
+
+        $em->persist($entity);
+        $em->flush();
+    }
+
     protected function deleteAction()
     {
         $easyadmin = $this->request->attributes->get('easyadmin');
@@ -45,6 +83,14 @@ class AdminController extends EasyAdminController
         $this->denyAccessUnlessGranted('delete', $itemToDelete);
 
         return parent::deleteAction();
+    }
+
+    protected function removeEntity($entity)
+    {
+        $em = $this->getDoctrine()->getManager('acl');
+
+        $em->remove($entity);
+        $em->flush();
     }
 
     protected function showAction()

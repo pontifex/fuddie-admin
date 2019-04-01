@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use App\Entity\Admin;
+use App\Entity\ACL\Admin;
 use App\Entity\MiniGame;
 use App\Entity\Restaurant;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -79,7 +79,7 @@ class MiniGameEntityVoter extends Voter
 
             // owner of company to which restaurant belongs
             if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-                && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+                && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }
@@ -104,7 +104,7 @@ class MiniGameEntityVoter extends Voter
 
             // owner of company to which restaurant belongs
             if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-                && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+                && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }
@@ -150,7 +150,7 @@ class MiniGameEntityVoter extends Voter
 
             // owner of company to which restaurant belongs
             if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
-                && $restaurant->getFkCompany()->getId() === $admin->getFkCompany()
+                && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;
             }
