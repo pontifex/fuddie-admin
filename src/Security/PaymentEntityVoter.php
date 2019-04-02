@@ -17,6 +17,7 @@ class PaymentEntityVoter extends Voter
     private const ACTION_NEW = 'new';
     private const ACTION_SEARCH = 'search';
     private const ACTION_SHOW = 'show';
+    private const ACTION_NOTIFY = 'notify';
 
     /**
      * @var Security
@@ -58,6 +59,8 @@ class PaymentEntityVoter extends Voter
                 return $this->canSearch();
             case ActionInterface::ACTION_SHOW:
                 return $this->canShow($payment, $admin);
+            case self::ACTION_NOTIFY:
+                return $this->canNotify();
         }
 
         throw new \LogicException('This code should not be reached!');
@@ -166,5 +169,14 @@ class PaymentEntityVoter extends Voter
         }
 
         return false;
+    }
+
+    private function canNotify()
+    {
+        return $this->security->isGranted('ROLE_SUPER_ADMIN')
+            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+            || $this->security->isGranted('ROLE_CASHIER')
+            ;
     }
 }

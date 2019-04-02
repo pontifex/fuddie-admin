@@ -30,8 +30,33 @@
         <script src="{{ asset('bundles/easyadmin/app.js') }}"></script>
     {% endblock head_javascript %}
 
-    {% if easyadmin_config('design.rtl') %}
-        <link rel="stylesheet" href="{{ asset('bundles/easyadmin/app-rtl.css') }}">
+    {% if is_granted('notify', 'App\\Entity\\Payment') %}
+        <script src="http://api.dev.fuddie.com/bundles/goswebsocket/js/vendor/autobahn.min.js"></script>
+        <script src="http://api.dev.fuddie.com/bundles/goswebsocket/js/gos_web_socket_client.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script>
+            const websocket = WS.connect('ws://api.dev.fuddie.com:4242');
+
+            websocket.on('socket/connect', (session) => {
+                console.info('connecting');
+
+                session.subscribe('payment/channel/{restaurantId}/{user.externalId}', (uri, payload) => {
+                    console.info('Received message', payload.msg);
+
+                    $("div.content-wrapper").append(
+                        '<div id="flash-messages">\n' +
+                        '                        <div class="alert alert-info" onclick="location.href = \'admin/?entity=Payment&action=show&menuIndex=6&submenuIndex=-1&sortField=id&sortDirection=DESC&page=1&referer=%252Fadmin%252F%253Fentity%253DPayment%2526action%253Dlist%2526menuIndex%253D6%2526submenuIndex%253D-1%2526sortField%253Did%2526sortDirection%253DDESC%2526page%253D1&id=1\';">\n' +
+                        '                            Payment #1 received!\n' +
+                        '                        </div>\n' +
+                        '                    </div>'
+                    )
+                });
+            });
+
+            websocket.on('socket/disconnect', function (error) {
+                console.info('Disconnected for ' + error.reason + ' with code ' + error.code);
+            });
+        </script>
     {% endif %}
 </head>
 
