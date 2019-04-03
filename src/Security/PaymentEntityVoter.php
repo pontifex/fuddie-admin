@@ -81,7 +81,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
+                && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
             }
@@ -108,7 +108,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
+                && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
             }
@@ -159,7 +159,7 @@ class PaymentEntityVoter extends Voter
 
             // owner restaurant
             if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-                && in_array($order->getFkRestaurant()->getId(), $admin->getCompanies())
+                && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
             }

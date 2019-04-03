@@ -119,12 +119,9 @@ class Order
     private $fkOrderStatus;
 
     /**
-     * @var \Payment
-     *
-     * @ORM\ManyToOne(targetEntity="Payment")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_payment", referencedColumnName="id")
-     * })
+     * Many Orders have one Payment. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="Payment", inversedBy="orders")
+     * @ORM\JoinColumn(name="fk_payment", referencedColumnName="id")
      */
     private $fkPayment;
 
