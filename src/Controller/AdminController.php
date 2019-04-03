@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\EasyAdmin\AclQueryBuilder;
 use App\Entity\ACL\Admin;
+use App\Security\Filter\AdminEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Configuration\ConfigManager;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 use EasyCorp\Bundle\EasyAdminBundle\Search\Autocomplete;
@@ -13,6 +14,16 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 
 class AdminController extends EasyAdminController
 {
+    /**
+     * @var AdminEntityFilter
+     */
+    private $filter;
+
+    public function __construct(AdminEntityFilter $filter)
+    {
+        $this->filter = $filter;
+    }
+
     public static function getSubscribedServices(): array
     {
         $result = parent::getSubscribedServices() + [
@@ -36,6 +47,17 @@ class AdminController extends EasyAdminController
         return parent::listAction();
     }
 
+    protected function createAdminListQueryBuilder(
+        string $entityClass,
+        string $sortDirection = null,
+        string $sortField = null,
+        string $dqlFilter = null
+    ) {
+        $qb = $this->get('easyadmin.query_builder')->createListQueryBuilder($this->entity, $sortField, $sortDirection, $dqlFilter);
+
+        return $this->filter->filterListQueryBuilder($qb);
+    }
+
     protected function newAction()
     {
         $this->denyAccessUnlessGranted('new', Admin::class);
@@ -56,6 +78,19 @@ class AdminController extends EasyAdminController
         $this->denyAccessUnlessGranted('search', Admin::class);
 
         return parent::searchAction();
+    }
+
+    protected function createAdminSearchQueryBuilder(
+        $entityClass,
+        $searchQuery,
+        array $searchableFields,
+        $sortField = null,
+        $sortDirection = null,
+        $dqlFilter = null
+    ) {
+        $qb = $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
+
+        return $this->filter->filterSearchQueryBuilder($qb);
     }
 
     protected function editAction()
@@ -87,9 +122,12 @@ class AdminController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        // soft delete
+        $entity->setDDeletedAt(new \DateTime());
+
         $em = $this->getDoctrine()->getManager('acl');
 
-        $em->remove($entity);
+        $em->persist($entity);
         $em->flush();
     }
 

@@ -2,13 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\ACL\Admin;
 use App\Entity\Restaurant;
-use Doctrine\DBAL\Query\QueryBuilder;
+use App\Security\Filter\RestaurantEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class RestaurantController extends EasyAdminController
 {
+    /**
+     * @var RestaurantEntityFilter
+     */
+    private $filter;
+
+    public function __construct(RestaurantEntityFilter $filter)
+    {
+        $this->filter = $filter;
+    }
+
     protected function listAction()
     {
         $this->denyAccessUnlessGranted('list', Restaurant::class);
@@ -22,26 +31,9 @@ class RestaurantController extends EasyAdminController
         string $sortField = null,
         string $dqlFilter = null
     ) {
-        /** @var QueryBuilder $qb */
-        $qb = $this->get('easyadmin.query_builder')->createListQueryBuilder(
-            $this->entity,
-            $sortField,
-            $sortDirection,
-            $dqlFilter
-        );
+        $qb = $this->get('easyadmin.query_builder')->createListQueryBuilder($this->entity, $sortField, $sortDirection, $dqlFilter);
 
-        /** @var Admin $admin */
-        $admin = $this->getUser();
-
-        if (in_array('ROLE_COMPANY_ADMIN', $admin->getRoles())) {
-            if (count($admin->getCompanies())) {
-                $qb->where('(entity.fkCompany IS NULL OR entity.fkCompany IN (' . implode(', ', $admin->getCompanies()) . '))');
-            } else {
-                $qb->where('entity.fkCompany IS NULL');
-            }
-        }
-
-        return $qb;
+        return $this->filter->filterListQueryBuilder($qb, $this->getUser());
     }
 
     protected function newAction()
@@ -58,28 +50,17 @@ class RestaurantController extends EasyAdminController
         return parent::searchAction();
     }
 
-    protected function createSearchQueryBuilder($entityClass, $searchQuery, array $searchableFields, $sortField = null, $sortDirection = null, $dqlFilter = null)
-    {
-        /** @var QueryBuilder $qb */
-        $qb = $this->get('easyadmin.query_builder')->createListQueryBuilder(
-            $this->entity,
-            $sortField,
-            $sortDirection,
-            $dqlFilter
-        );
+    protected function createRestaurantSearchQueryBuilder(
+        $entityClass,
+        $searchQuery,
+        array $searchableFields,
+        $sortField = null,
+        $sortDirection = null,
+        $dqlFilter = null
+    ) {
+        $qb = $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
 
-        /** @var Admin $admin */
-        $admin = $this->getUser();
-
-        if (in_array('ROLE_COMPANY_ADMIN', $admin->getRoles())) {
-            if (count($admin->getCompanies())) {
-                $qb->where('(entity.fkCompany IS NULL OR entity.fkCompany IN (' . implode(', ', $admin->getCompanies()) . '))');
-            } else {
-                $qb->where('entity.fkCompany IS NULL');
-            }
-        }
-
-        return $qb;
+        return $this->filter->filterSearchQueryBuilder($qb, $this->getUser());
     }
 
     protected function editAction()
@@ -104,6 +85,17 @@ class RestaurantController extends EasyAdminController
         $this->denyAccessUnlessGranted('delete', $restaurant);
 
         return parent::deleteAction();
+    }
+
+    protected function removeEntity($entity)
+    {
+        // soft delete
+        $entity->setDDeletedAt(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager('acl');
+
+        $em->persist($entity);
+        $em->flush();
     }
 
     protected function showAction()

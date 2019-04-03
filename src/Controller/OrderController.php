@@ -3,24 +3,42 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Security\Filter\OrderEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class OrderController extends EasyAdminController
 {
+    /**
+     * @var OrderEntityFilter
+     */
+    private $filter;
+
+    public function __construct(OrderEntityFilter $filter)
+    {
+        $this->filter = $filter;
+    }
+
     protected function listAction()
     {
         $this->denyAccessUnlessGranted('list', Order::class);
 
-        //@todo add filter to show only entities user has access to
-
         return parent::listAction();
+    }
+
+    protected function createOrderListQueryBuilder(
+        string $entityClass,
+        string $sortDirection = null,
+        string $sortField = null,
+        string $dqlFilter = null
+    ) {
+        $qb = $this->get('easyadmin.query_builder')->createListQueryBuilder($this->entity, $sortField, $sortDirection, $dqlFilter);
+
+        return $this->filter->filterListQueryBuilder($qb, $this->getUser());
     }
 
     protected function newAction()
     {
         $this->denyAccessUnlessGranted('new', Order::class);
-
-        //@todo add filter to show only entities user has access to
 
         return parent::newAction();
     }
@@ -29,9 +47,20 @@ class OrderController extends EasyAdminController
     {
         $this->denyAccessUnlessGranted('search', Order::class);
 
-        //@todo add filter to show only entities user has access to
-
         return parent::searchAction();
+    }
+
+    protected function createOrderSearchQueryBuilder(
+        $entityClass,
+        $searchQuery,
+        array $searchableFields,
+        $sortField = null,
+        $sortDirection = null,
+        $dqlFilter = null
+    ) {
+        $qb = $this->get('easyadmin.query_builder')->createSearchQueryBuilder($this->entity, $searchQuery, $sortField, $sortDirection, $dqlFilter);
+
+        return $this->filter->filterSearchQueryBuilder($qb, $this->getUser());
     }
 
     protected function editAction()
@@ -56,6 +85,17 @@ class OrderController extends EasyAdminController
         $this->denyAccessUnlessGranted('delete', $order);
 
         return parent::deleteAction();
+    }
+
+    protected function removeEntity($entity)
+    {
+        // soft delete
+        $entity->setDDeletedAt(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager('acl');
+
+        $em->persist($entity);
+        $em->flush();
     }
 
     protected function showAction()
