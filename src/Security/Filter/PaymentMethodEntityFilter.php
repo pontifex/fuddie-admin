@@ -3,14 +3,13 @@
 namespace App\Security\Filter;
 
 use App\Entity\ACL\Admin;
-use App\Entity\Restaurant;
-use App\Security\RoleInterface;
+use App\Entity\PaymentMethod;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\DoctrineChoiceLoader;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\ORMQueryBuilderLoader;
 
-class RestaurantEntityFilter
+class PaymentMethodEntityFilter
 {
     public function createLazyLoader(EntityManager $em, Admin $admin = null)
     {
@@ -22,7 +21,7 @@ class RestaurantEntityFilter
         return new \Symfony\Component\Form\ChoiceList\LazyChoiceList(
             new DoctrineChoiceLoader(
                 $em,
-                Restaurant::class,
+                PaymentMethod::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
             )
@@ -50,21 +49,6 @@ class RestaurantEntityFilter
         // do not show soft deleted
         $qb->andWhere('entity.dDeletedAt IS NULL');
 
-        if ($admin->hasRole(RoleInterface::ROLE_SUPER_ADMIN)) {
-            return $qb;
-        }
-
-        // show without restaurant or with restaurant granted to
-        if ($admin->hasRole(RoleInterface::ROLE_COMPANY_ADMIN)) {
-            $where = 'entity.fkCompany IS NULL';
-
-            if (count($admin->getCompanies())) {
-                $where .= ' OR entity.fkCompany IN ('.implode(', ', $admin->getCompanies()).')';
-            }
-
-            $qb->andWhere($where);
-        }
-
         return $qb;
     }
 
@@ -73,7 +57,7 @@ class RestaurantEntityFilter
         $qb = new QueryBuilder($em);
 
         $qb->select('entity')
-            ->from(Restaurant::class, 'entity');
+            ->from(PaymentMethod::class, 'entity');
 
         return $qb;
     }

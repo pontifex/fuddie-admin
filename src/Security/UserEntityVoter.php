@@ -3,12 +3,12 @@
 namespace App\Security;
 
 use App\Entity\ACL\Admin;
-use App\Entity\Category;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
 
-class CategoryEntityVoter extends Voter
+class UserEntityVoter extends Voter
 {
     private const ACTION_DELETE = 'delete';
     private const ACTION_EDIT = 'edit';
@@ -29,7 +29,7 @@ class CategoryEntityVoter extends Voter
 
     protected function supports($attribute, $subject)
     {
-        return $subject instanceof Category || Category::class === $subject || 'Category' === $subject;
+        return $subject instanceof User || User::class === $subject || 'User' === $subject;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -40,6 +40,9 @@ class CategoryEntityVoter extends Voter
         if (!$admin instanceof Admin) {
             return false;
         }
+
+        /** @var User $user */
+        $user = $subject;
 
         switch ($attribute) {
             case ActionInterface::ACTION_DELETE:
@@ -61,31 +64,31 @@ class CategoryEntityVoter extends Voter
 
     private function canDelete()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 
     private function canEdit()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 
     private function canList()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 
     private function canNew()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 
     private function canSearch()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 
     private function canShow()
     {
-        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
+        return $this->security->isGranted(RoleInterface::ROLE_ANY_USER);
     }
 }

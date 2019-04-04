@@ -19,8 +19,9 @@ class AdminController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(AdminEntityFilter $filter)
-    {
+    public function __construct(
+        AdminEntityFilter $filter
+    ) {
         $this->filter = $filter;
     }
 
@@ -122,6 +123,7 @@ class AdminController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /* @var Admin $entity */
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 

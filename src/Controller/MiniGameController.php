@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\MiniGame;
+use App\Security\Filter\BadgeEntityFilter;
 use App\Security\Filter\MiniGameEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
@@ -13,9 +14,15 @@ class MiniGameController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(MiniGameEntityFilter $filter)
+    /**
+     * @var BadgeEntityFilter
+     */
+    private $filterBadge;
+
+    public function __construct(MiniGameEntityFilter $filter, BadgeEntityFilter $filterBadge)
     {
         $this->filter = $filter;
+        $this->filterBadge = $filterBadge;
     }
 
     protected function listAction()
@@ -107,5 +114,20 @@ class MiniGameController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', $miniGame);
 
         return parent::showAction();
+    }
+
+    protected function createMiniGameEntityFormBuilder($entity, $view)
+    {
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilder */
+        $formBuilder = $this->createEntityFormBuilder($entity, $view);
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderBadge */
+        $formBuilderBadge = $formBuilder->get('fkBadge');
+        $formBuilderBadge->setAttribute(
+            'choice_list',
+            $this->filterBadge->createLazyLoader($this->em, $this->getUser())
+        );
+
+        return $formBuilder;
     }
 }
