@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Payment;
+use App\Security\Filter\OrderEntityFilter;
 use App\Security\Filter\PaymentEntityFilter;
+use App\Security\Filter\PaymentMethodEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class PaymentController extends EasyAdminController
@@ -13,9 +15,24 @@ class PaymentController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(PaymentEntityFilter $filter)
-    {
+    /**
+     * @var PaymentMethodEntityFilter
+     */
+    private $filterPaymentMethod;
+
+    /**
+     * @var OrderEntityFilter
+     */
+    private $filterOrder;
+
+    public function __construct(
+        PaymentEntityFilter $filter,
+        PaymentMethodEntityFilter $filterPaymentMethod,
+        OrderEntityFilter $filterOrder
+    ) {
         $this->filter = $filter;
+        $this->filterPaymentMethod = $filterPaymentMethod;
+        $this->filterOrder = $filterOrder;
     }
 
     protected function listAction()
@@ -89,6 +106,7 @@ class PaymentController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /* @var Payment $entity */
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
@@ -108,5 +126,27 @@ class PaymentController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', $payment);
 
         return parent::showAction();
+    }
+
+    protected function createPaymentEntityFormBuilder($entity, $view)
+    {
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilder */
+        $formBuilder = $this->createEntityFormBuilder($entity, $view);
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderPaymentMethod */
+        $formBuilderPaymentMethod = $formBuilder->get('fkPaymentMethod');
+        $formBuilderPaymentMethod->setAttribute(
+            'choice_list',
+            $this->filterPaymentMethod->createLazyLoader($this->em, $this->getUser())
+        );
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderOrders */
+        $formBuilderOrders = $formBuilder->get('orders');
+        $formBuilderOrders->setAttribute(
+            'choice_list',
+            $this->filterOrder->createLazyLoader($this->em, $this->getUser())
+        );
+
+        return $formBuilder;
     }
 }

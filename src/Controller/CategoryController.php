@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Security\Filter\CategoryEntityFilter;
+use App\Security\Filter\RestaurantEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class CategoryController extends EasyAdminController
@@ -13,9 +14,15 @@ class CategoryController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(CategoryEntityFilter $filter)
+    /**
+     * @var RestaurantEntityFilter
+     */
+    private $filterRestaurant;
+
+    public function __construct(CategoryEntityFilter $filter, RestaurantEntityFilter $filterRestaurant)
     {
         $this->filter = $filter;
+        $this->filterRestaurant = $filterRestaurant;
     }
 
     protected function listAction()
@@ -79,6 +86,7 @@ class CategoryController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /* @var Category $entity */
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
@@ -93,5 +101,20 @@ class CategoryController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', Category::class);
 
         return parent::showAction();
+    }
+
+    protected function createCategoryEntityFormBuilder($entity, $view)
+    {
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilder */
+        $formBuilder = $this->createEntityFormBuilder($entity, $view);
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderRestaurant */
+        $formBuilderRestaurant = $formBuilder->get('restaurant');
+        $formBuilderRestaurant->setAttribute(
+            'choice_list',
+            $this->filterRestaurant->createLazyLoader($this->em, $this->getUser())
+        );
+
+        return $formBuilder;
     }
 }

@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Security\Filter\OrderEntityFilter;
+use App\Security\Filter\OrderStatusEntityFilter;
+use App\Security\Filter\PaymentEntityFilter;
+use App\Security\Filter\RestaurantEntityFilter;
+use App\Security\Filter\UserEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
 class OrderController extends EasyAdminController
@@ -13,9 +17,38 @@ class OrderController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(OrderEntityFilter $filter)
-    {
+    /**
+     * @var OrderStatusEntityFilter
+     */
+    private $filterOrderStatus;
+
+    /**
+     * @var PaymentEntityFilter
+     */
+    private $filterPayment;
+
+    /**
+     * @var RestaurantEntityFilter
+     */
+    private $filterRestaurant;
+
+    /**
+     * @var UserEntityFilter
+     */
+    private $filterUser;
+
+    public function __construct(
+        OrderEntityFilter $filter,
+        OrderStatusEntityFilter $filterOrderStatus,
+        PaymentEntityFilter $filterPayment,
+        RestaurantEntityFilter $filterRestaurant,
+        UserEntityFilter $filterUser
+    ) {
         $this->filter = $filter;
+        $this->filterOrderStatus = $filterOrderStatus;
+        $this->filterPayment = $filterPayment;
+        $this->filterRestaurant = $filterRestaurant;
+        $this->filterUser = $filterUser;
     }
 
     protected function listAction()
@@ -108,5 +141,41 @@ class OrderController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', $order);
 
         return parent::showAction();
+    }
+
+    protected function createOrderEntityFormBuilder($entity, $view)
+    {
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilder */
+        $formBuilder = $this->createEntityFormBuilder($entity, $view);
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderOrderStatus */
+        $formBuilderOrderStatus = $formBuilder->get('fkOrderStatus');
+        $formBuilderOrderStatus->setAttribute(
+            'choice_list',
+            $this->filterOrderStatus->createLazyLoader($this->em, $this->getUser())
+        );
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderPayment */
+        $formBuilderPayment = $formBuilder->get('fkPayment');
+        $formBuilderPayment->setAttribute(
+            'choice_list',
+            $this->filterPayment->createLazyLoader($this->em, $this->getUser())
+        );
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderRestaurant */
+        $formBuilderRestaurant = $formBuilder->get('fkRestaurant');
+        $formBuilderRestaurant->setAttribute(
+            'choice_list',
+            $this->filterRestaurant->createLazyLoader($this->em, $this->getUser())
+        );
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderUser */
+        $formBuilderUser = $formBuilder->get('fkUser');
+        $formBuilderUser->setAttribute(
+            'choice_list',
+            $this->filterUser->createLazyLoader($this->em, $this->getUser())
+        );
+
+        return $formBuilder;
     }
 }

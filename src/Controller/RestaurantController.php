@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Restaurant;
+use App\Security\Filter\CategoryEntityFilter;
+use App\Security\Filter\CompanyEntityFilter;
 use App\Security\Filter\RestaurantEntityFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\EasyAdminController;
 
@@ -13,9 +15,24 @@ class RestaurantController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(RestaurantEntityFilter $filter)
-    {
+    /**
+     * @var CompanyEntityFilter
+     */
+    private $filterCompany;
+
+    /**
+     * @var CategoryEntityFilter
+     */
+    private $filterCategory;
+
+    public function __construct(
+        RestaurantEntityFilter $filter,
+        CompanyEntityFilter $filterCompany,
+        CategoryEntityFilter $filterCategory
+    ) {
         $this->filter = $filter;
+        $this->filterCompany = $filterCompany;
+        $this->filterCategory = $filterCategory;
     }
 
     protected function listAction()
@@ -89,6 +106,7 @@ class RestaurantController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /* @var Restaurant $entity */
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
@@ -108,5 +126,27 @@ class RestaurantController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', $restaurant);
 
         return parent::showAction();
+    }
+
+    protected function createRestaurantEntityFormBuilder($entity, $view)
+    {
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilder */
+        $formBuilder = $this->createEntityFormBuilder($entity, $view);
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderCompany */
+        $formBuilderCompany = $formBuilder->get('fkCompany');
+        $formBuilderCompany->setAttribute(
+            'choice_list',
+            $this->filterCompany->createLazyLoader($this->em, $this->getUser())
+        );
+
+        /** @var \Symfony\Component\Form\FormBuilder $formBuilderCategory */
+        $formBuilderCategory = $formBuilder->get('category');
+        $formBuilderCategory->setAttribute(
+            'choice_list',
+            $this->filterCategory->createLazyLoader($this->em, $this->getUser())
+        );
+
+        return $formBuilder;
     }
 }

@@ -3,12 +3,33 @@
 namespace App\Security\Filter;
 
 use App\Entity\ACL\Admin;
+use App\Entity\Order;
 use App\Entity\Restaurant;
 use App\Security\RoleInterface;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\DoctrineChoiceLoader;
+use Symfony\Bridge\Doctrine\Form\ChoiceList\ORMQueryBuilderLoader;
 
 class OrderEntityFilter
 {
+    public function createLazyLoader(EntityManager $em, Admin $admin = null)
+    {
+        $qb = $this->filterListQueryBuilder(
+            $this->createQueryBuilder($em),
+            $admin
+        );
+
+        return new \Symfony\Component\Form\ChoiceList\LazyChoiceList(
+            new DoctrineChoiceLoader(
+                $em,
+                Order::class,
+                null,
+                new ORMQueryBuilderLoader($qb)
+            )
+        );
+    }
+
     public function filterListQueryBuilder(
         QueryBuilder $qb,
         Admin $admin = null
@@ -64,6 +85,16 @@ class OrderEntityFilter
 
             $qb->andWhere($where);
         }
+
+        return $qb;
+    }
+
+    private function createQueryBuilder(EntityManager $em)
+    {
+        $qb = new QueryBuilder($em);
+
+        $qb->select('entity')
+            ->from(Order::class, 'entity');
 
         return $qb;
     }

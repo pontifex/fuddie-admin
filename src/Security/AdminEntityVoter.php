@@ -9,13 +9,6 @@ use Symfony\Component\Security\Core\Security;
 
 class AdminEntityVoter extends Voter
 {
-    private const ACTION_DELETE = 'delete';
-    private const ACTION_EDIT = 'edit';
-    private const ACTION_LIST = 'list';
-    private const ACTION_NEW = 'new';
-    private const ACTION_SEARCH = 'search';
-    private const ACTION_SHOW = 'show';
-
     /**
      * @var Security
      */
@@ -41,17 +34,17 @@ class AdminEntityVoter extends Voter
         }
 
         switch ($attribute) {
-            case self::ACTION_DELETE:
+            case ActionInterface::ACTION_DELETE:
                 return $this->canDelete($subject, $admin);
-            case self::ACTION_EDIT:
+            case ActionInterface::ACTION_EDIT:
                 return $this->canEdit();
-            case self::ACTION_LIST:
+            case ActionInterface::ACTION_LIST:
                 return $this->canList();
-            case self::ACTION_NEW:
+            case ActionInterface::ACTION_NEW:
                 return $this->canNew();
-            case self::ACTION_SEARCH:
+            case ActionInterface::ACTION_SEARCH:
                 return $this->canSearch();
-            case self::ACTION_SHOW:
+            case ActionInterface::ACTION_SHOW:
                 return $this->canShow();
         }
 
