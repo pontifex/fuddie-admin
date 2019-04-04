@@ -65,20 +65,20 @@ class MiniGameEntityVoter extends Voter
 
     private function canDelete(MiniGame $miniGame, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)) {
             return true;
         }
 
         /** @var Restaurant $restaurant */
         foreach ($miniGame->getRestaurants() as $restaurant) {
             if (is_null($restaurant)
-                && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))
+                && ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN) || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN))
             ) {
                 continue;
             }
 
             // owner of company to which restaurant belongs
-            if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
                 && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;
@@ -90,20 +90,20 @@ class MiniGameEntityVoter extends Voter
 
     private function canEdit(MiniGame $miniGame, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)) {
             return true;
         }
 
         /** @var Restaurant $restaurant */
         foreach ($miniGame->getRestaurants() as $restaurant) {
             if (is_null($restaurant)
-                && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))
+                && ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN) || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN))
             ) {
                 continue;
             }
 
             // owner of company to which restaurant belongs
-            if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
                 && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;
@@ -115,41 +115,41 @@ class MiniGameEntityVoter extends Voter
 
     private function canList()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
         ;
     }
 
     private function canNew()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
         ;
     }
 
     private function canSearch()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_COMPANY_ADMIN')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
         ;
     }
 
     private function canShow(MiniGame $miniGame, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)) {
             return true;
         }
 
         /** @var Restaurant $restaurant */
         foreach ($miniGame->getRestaurants() as $restaurant) {
             if (is_null($restaurant)
-                && ($this->security->isGranted('ROLE_COMPANY_ADMIN') || $this->security->isGranted('ROLE_RESTAURANT_ADMIN'))
+                && ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN) || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN))
             ) {
                 continue;
             }
 
             // owner of company to which restaurant belongs
-            if ($this->security->isGranted('ROLE_COMPANY_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_COMPANY_ADMIN)
                 && in_array($restaurant->getFkCompany()->getId(), $admin->getCompanies())
             ) {
                 return true;

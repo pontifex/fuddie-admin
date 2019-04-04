@@ -38,7 +38,7 @@ class RestaurantEntityFilter
             $where = 'entity.fkCompany IS NULL';
 
             if (count($admin->getCompanies())) {
-                $where .= ' OR entity.fkCompany IN (' . implode(', ', $admin->getCompanies()) . ')';
+                $where .= ' OR entity.fkCompany IN ('.implode(', ', $admin->getCompanies()).')';
             }
 
             $qb->andWhere($where);
