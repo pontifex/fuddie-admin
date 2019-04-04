@@ -2,6 +2,7 @@
 
 namespace App\Entity\ACL;
 
+use App\Security\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -115,7 +116,7 @@ class Admin implements UserInterface
         }
 
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ANY_USER';
+        $roles[] = RoleInterface::ROLE_ANY_USER;
 
         return array_unique($roles);
     }

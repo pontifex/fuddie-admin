@@ -120,6 +120,7 @@ class Order
 
     /**
      * Many Orders have one Payment. This is the owning side.
+     *
      * @ORM\ManyToOne(targetEntity="Payment", inversedBy="orders")
      * @ORM\JoinColumn(name="fk_payment", referencedColumnName="id")
      */

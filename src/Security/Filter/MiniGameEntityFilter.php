@@ -50,7 +50,7 @@ class MiniGameEntityFilter
             $where = 'restaurant.fkCompany IS NULL';
 
             if (count($admin->getCompanies())) {
-                $where .= ' OR restaurant.fkCompany IN (' . implode(', ', $admin->getCompanies()) . ')';
+                $where .= ' OR restaurant.fkCompany IN ('.implode(', ', $admin->getCompanies()).')';
             }
 
             $qb->andWhere($where);

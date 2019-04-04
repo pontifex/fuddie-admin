@@ -46,7 +46,7 @@ class WaiterEntityFilter
                 $where = 'restaurant.fkCompany IS NULL';
 
                 if (count($admin->getCompanies())) {
-                    $where .= ' OR restaurant.fkCompany IN (' . implode(', ', $admin->getCompanies()) . ')';
+                    $where .= ' OR restaurant.fkCompany IN ('.implode(', ', $admin->getCompanies()).')';
                 }
             }
 
@@ -58,7 +58,7 @@ class WaiterEntityFilter
                 $where .= 'entity.fkRestaurant IS NULL';
 
                 if (count($admin->getRestaurants())) {
-                    $where .= ' OR entity.fkRestaurant IN (' . implode(', ', $admin->getRestaurants()) . ')';
+                    $where .= ' OR entity.fkRestaurant IN ('.implode(', ', $admin->getRestaurants()).')';
                 }
             }
 

@@ -5,6 +5,7 @@ namespace App\Tests\Controller;
 use App\Entity\ACL\Admin;
 use App\Entity\Company;
 use App\Entity\Restaurant;
+use App\Security\RoleInterface;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
@@ -33,9 +34,9 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setId(1);
         $admin->setEmail('admin@fuddie.com');
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
-        $admin->setRoles(['ROLE_SUPER_ADMIN']);
+        $admin->setRoles([RoleInterface::ROLE_SUPER_ADMIN]);
 
-        $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_SUPER_ADMIN']);
+        $token = new PostAuthenticationGuardToken($admin, $firewallName, [RoleInterface::ROLE_SUPER_ADMIN]);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 
@@ -54,9 +55,9 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setId(2);
         $admin->setEmail('user@fuddie.com');
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
-        $admin->setRoles(['ROLE_ANY_USER']);
+        $admin->setRoles([RoleInterface::ROLE_ANY_USER]);
 
-        $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_ANY_USER']);
+        $token = new PostAuthenticationGuardToken($admin, $firewallName, [RoleInterface::ROLE_ANY_USER]);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 
@@ -75,9 +76,9 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setId(3);
         $admin->setEmail('cashier@fuddie.com');
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
-        $admin->setRoles(['ROLE_CASHIER']);
+        $admin->setRoles([RoleInterface::ROLE_CASHIER]);
 
-        $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_CASHIER']);
+        $token = new PostAuthenticationGuardToken($admin, $firewallName, [RoleInterface::ROLE_CASHIER]);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 
@@ -96,11 +97,11 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setId(4);
         $admin->setEmail('restaurant@fuddie.com');
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
-        $admin->setRoles(['ROLE_RESTAURANT_ADMIN']);
+        $admin->setRoles([RoleInterface::ROLE_RESTAURANT_ADMIN]);
 
         $admin->setRestaurants([1]);
 
-        $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_RESTAURANT_ADMIN']);
+        $token = new PostAuthenticationGuardToken($admin, $firewallName, [RoleInterface::ROLE_RESTAURANT_ADMIN]);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 
@@ -119,11 +120,11 @@ abstract class AbstractControllerTest extends WebTestCase
         $admin->setId(5);
         $admin->setEmail('company@fuddie.com');
         $admin->setPassword('$argon2i$v=19$m=1024,t=2,p=2$WVE5eG5IYmY5ZnA5U3dQZQ$ylD8fsNcmjOao2LJ4t/yNvB02VfY8hKH4B9FkI06y4Q');
-        $admin->setRoles(['ROLE_COMPANY_ADMIN']);
+        $admin->setRoles([RoleInterface::ROLE_COMPANY_ADMIN]);
 
         $admin->setCompanies([1]);
 
-        $token = new PostAuthenticationGuardToken($admin, $firewallName, ['ROLE_COMPANY_ADMIN']);
+        $token = new PostAuthenticationGuardToken($admin, $firewallName, [RoleInterface::ROLE_COMPANY_ADMIN]);
         $session->set('_security_'.$firewallContext, serialize($token));
         $session->save();
 

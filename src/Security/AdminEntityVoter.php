@@ -60,7 +60,7 @@ class AdminEntityVoter extends Voter
 
     private function canDelete(Admin $subject, Admin $admin)
     {
-        if (!$this->security->isGranted('ROLE_SUPER_ADMIN')) {
+        if (!$this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)) {
             return false;
         }
 
@@ -74,26 +74,26 @@ class AdminEntityVoter extends Voter
 
     private function canEdit()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
     private function canList()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
     private function canNew()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
     private function canSearch()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 
     private function canShow()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN');
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN);
     }
 }

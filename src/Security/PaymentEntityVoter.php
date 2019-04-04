@@ -65,8 +65,8 @@ class PaymentEntityVoter extends Voter
 
     private function canDelete(Payment $payment, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ) {
             return true;
         }
@@ -74,13 +74,13 @@ class PaymentEntityVoter extends Voter
         /** @var Order $order */
         foreach ($payment->getOrders() as $order) {
             if (is_null($order)
-                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
             ) {
                 continue;
             }
 
             // owner restaurant
-            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
                 && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
@@ -92,8 +92,8 @@ class PaymentEntityVoter extends Voter
 
     private function canEdit(Payment $payment, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ) {
             return true;
         }
@@ -101,13 +101,13 @@ class PaymentEntityVoter extends Voter
         /** @var Order $order */
         foreach ($payment->getOrders() as $order) {
             if (is_null($order)
-                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
             ) {
                 continue;
             }
 
             // owner restaurant
-            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
                 && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
@@ -119,32 +119,32 @@ class PaymentEntityVoter extends Voter
 
     private function canNew()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ;
     }
 
     private function canSearch()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ;
     }
 
     private function canList()
     {
-        return $this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        return $this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ;
     }
 
     private function canShow(Payment $payment, Admin $admin)
     {
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')
-            || $this->security->isGranted('ROLE_CASHIER')
+        if ($this->security->isGranted(RoleInterface::ROLE_SUPER_ADMIN)
+            || $this->security->isGranted(RoleInterface::ROLE_CASHIER)
         ) {
             return true;
         }
@@ -152,13 +152,13 @@ class PaymentEntityVoter extends Voter
         /** @var Order $order */
         foreach ($payment->getOrders() as $order) {
             if (is_null($order)
-                && $this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+                && $this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
             ) {
                 continue;
             }
 
             // owner restaurant
-            if ($this->security->isGranted('ROLE_RESTAURANT_ADMIN')
+            if ($this->security->isGranted(RoleInterface::ROLE_RESTAURANT_ADMIN)
                 && in_array($order->getFkRestaurant()->getId(), $admin->getRestaurants())
             ) {
                 return true;
