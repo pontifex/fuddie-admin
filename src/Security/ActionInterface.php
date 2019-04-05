@@ -10,4 +10,5 @@ interface ActionInterface
      const ACTION_NEW = 'new';
      const ACTION_SEARCH = 'search';
      const ACTION_SHOW = 'show';
+     const ACTION_NOTIFY = 'notify';
 }
