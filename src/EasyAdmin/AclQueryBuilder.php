@@ -21,6 +21,10 @@ class AclQueryBuilder extends EasyAdminQueryBuilder
         $this->doctrine = $doctrine;
     }
 
+    /**
+     * @desc uses correct database
+     * @return ObjectManager
+     */
     public function getEntityManager(): ObjectManager
     {
         return $this->doctrine->getManager('acl');
