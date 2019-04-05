@@ -83,11 +83,16 @@ class AppCustomAuthenticator extends AbstractFormLoginAuthenticator
             throw new InvalidCsrfTokenException();
         }
 
+        /** @var Admin $user */
         $user = $this->aclEntityManager->getRepository(Admin::class)->findOneBy(['email' => $credentials['email']]);
 
         if (!$user) {
             // fail authentication with a custom error
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
+        }
+
+        if (!is_null($user->getDDeletedAt())) {
+            throw new CustomUserMessageAuthenticationException('Account deactivated.');
         }
 
         return $user;
