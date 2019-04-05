@@ -10,13 +10,6 @@ use Symfony\Component\Security\Core\Security;
 
 class CompanyEntityVoter extends Voter
 {
-    private const ACTION_DELETE = 'delete';
-    private const ACTION_EDIT = 'edit';
-    private const ACTION_LIST = 'list';
-    private const ACTION_NEW = 'new';
-    private const ACTION_SEARCH = 'search';
-    private const ACTION_SHOW = 'show';
-
     /**
      * @var Security
      */
