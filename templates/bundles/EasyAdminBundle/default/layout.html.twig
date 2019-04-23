@@ -37,7 +37,6 @@
     {% if is_granted('notify', 'App\\Entity\\Payment') %}
         <script src="http://api.dev.fuddie.com/bundles/goswebsocket/js/vendor/autobahn.min.js"></script>
         <script src="http://api.dev.fuddie.com/bundles/goswebsocket/js/gos_web_socket_client.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script>
             const websocket = WS.connect('ws://api.dev.fuddie.com:4242');
 
