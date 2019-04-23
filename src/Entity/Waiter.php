@@ -60,14 +60,14 @@ class Waiter
     private $dUpdatedAt = 'CURRENT_TIMESTAMP';
 
     /**
-     * @var string|null
+     * @var \DateTime|null
      *
-     * @ORM\Column(name="d_deleted_at", type="string", length=45, nullable=true)
+     * @ORM\Column(name="d_deleted_at", type="datetime", length=45, nullable=true)
      */
     private $dDeletedAt;
 
     /**
-     * @var \Restaurant
+     * @var Restaurant
      *
      * @ORM\ManyToOne(targetEntity="Restaurant")
      * @ORM\JoinColumns({
@@ -143,12 +143,13 @@ class Waiter
         return $this;
     }
 
-    public function getDDeletedAt(): ?string
+    public function getDDeletedAt(): ?\DateTimeInterface
     {
-        return $this->dDeletedAt;
+        return ($this->dDeletedAt instanceof \DateTimeInterface || is_null($this->dDeletedAt))
+            ? $this->dDeletedAt : new \DateTime();
     }
 
-    public function setDDeletedAt(?string $dDeletedAt): self
+    public function setDDeletedAt(\DateTimeInterface $dDeletedAt): self
     {
         $this->dDeletedAt = $dDeletedAt;
 
