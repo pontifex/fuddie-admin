@@ -91,7 +91,7 @@ class Order
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt = 'CURRENT_TIMESTAMP';
+    private $dCreatedAt;
 
     /**
      * @var \DateTime
@@ -99,7 +99,7 @@ class Order
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
+    private $dUpdatedAt;
 
     /**
      * @var \DateTime|null
@@ -109,7 +109,7 @@ class Order
     private $dDeletedAt;
 
     /**
-     * @var \OrderStatus
+     * @var OrderStatus
      *
      * @ORM\ManyToOne(targetEntity="OrderStatus")
      * @ORM\JoinColumns({
@@ -127,7 +127,7 @@ class Order
     private $fkPayment;
 
     /**
-     * @var \Restaurant
+     * @var Restaurant
      *
      * @ORM\ManyToOne(targetEntity="Restaurant")
      * @ORM\JoinColumns({
@@ -137,7 +137,7 @@ class Order
     private $fkRestaurant;
 
     /**
-     * @var \User
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({

@@ -49,7 +49,7 @@ class Waiter
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt = 'CURRENT_TIMESTAMP';
+    private $dCreatedAt;
 
     /**
      * @var \DateTime
@@ -57,7 +57,7 @@ class Waiter
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
+    private $dUpdatedAt;
 
     /**
      * @var \DateTime|null
@@ -145,8 +145,7 @@ class Waiter
 
     public function getDDeletedAt(): ?\DateTimeInterface
     {
-        return ($this->dDeletedAt instanceof \DateTimeInterface || is_null($this->dDeletedAt))
-            ? $this->dDeletedAt : new \DateTime();
+        return $this->dDeletedAt;
     }
 
     public function setDDeletedAt(\DateTimeInterface $dDeletedAt): self

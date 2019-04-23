@@ -57,7 +57,7 @@ class Payment
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt = 'CURRENT_TIMESTAMP';
+    private $dCreatedAt;
 
     /**
      * @var \DateTime
@@ -65,7 +65,7 @@ class Payment
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
+    private $dUpdatedAt;
 
     /**
      * @var \DateTime|null
@@ -75,7 +75,7 @@ class Payment
     private $dDeletedAt;
 
     /**
-     * @var \PaymentMethod
+     * @var PaymentMethod
      *
      * @ORM\ManyToOne(targetEntity="PaymentMethod")
      * @ORM\JoinColumns({
@@ -89,6 +89,11 @@ class Payment
      * @ORM\OneToMany(targetEntity="Order", mappedBy="fkPayment")
      */
     private $orders;
+
+    public function __construct()
+    {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -201,7 +206,7 @@ class Payment
         return $this->orders;
     }
 
-    public function addOrders(Order $order): self
+    public function addOrder(Order $order): self
     {
         if (!$this->orders->contains($order)) {
             $this->orders[] = $order;
@@ -210,7 +215,7 @@ class Payment
         return $this;
     }
 
-    public function removeOrders(Order $order): self
+    public function removeOrder(Order $order): self
     {
         if ($this->orders->contains($order)) {
             $this->orders->removeElement($order);
