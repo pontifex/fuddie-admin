@@ -71,7 +71,7 @@ class Waiter
      *
      * @ORM\ManyToOne(targetEntity="Restaurant")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_restaurant", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fk_restaurant", referencedColumnName="id", nullable=false)
      * })
      */
     private $fkRestaurant;
