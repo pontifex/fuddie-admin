@@ -65,6 +65,11 @@ class RestaurantEntityFilter
             $qb->andWhere($where);
         }
 
+        if (! $admin->hasRole(RoleInterface::ROLE_COMPANY_ADMIN)) {
+            $where = 'entity.fkCompany IS NULL';
+            $qb->andWhere($where);
+        }
+
         return $qb;
     }
 
