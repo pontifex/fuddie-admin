@@ -64,7 +64,7 @@ class MiniGame
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt = 'CURRENT_TIMESTAMP';
+    private $dCreatedAt;
 
     /**
      * @var \DateTime
@@ -72,7 +72,7 @@ class MiniGame
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
+    private $dUpdatedAt;
 
     /**
      * @var \DateTime|null
@@ -82,11 +82,11 @@ class MiniGame
     private $dDeletedAt;
 
     /**
-     * @var \Badge
+     * @var Badge
      *
      * @ORM\ManyToOne(targetEntity="Badge")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fk_badge", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fk_badge", referencedColumnName="id", nullable=false)
      * })
      */
     private $fkBadge;
@@ -123,6 +123,7 @@ class MiniGame
     public function __construct()
     {
         $this->miniGameCategory = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->restaurants = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId(): ?int

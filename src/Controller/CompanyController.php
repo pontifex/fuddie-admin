@@ -25,7 +25,7 @@ class CompanyController extends EasyAdminController
         return parent::listAction();
     }
 
-    protected function createMiniGameListQueryBuilder(
+    protected function createCompanyListQueryBuilder(
         string $entityClass,
         string $sortDirection = null,
         string $sortField = null,
@@ -50,7 +50,7 @@ class CompanyController extends EasyAdminController
         return parent::searchAction();
     }
 
-    protected function createMiniGameSearchQueryBuilder(
+    protected function createCompanySearchQueryBuilder(
         $entityClass,
         $searchQuery,
         array $searchableFields,
