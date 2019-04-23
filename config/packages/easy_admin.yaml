@@ -37,7 +37,7 @@ easy_admin:
                     - vName
                     - vDescription
                     - bStatus
-                    - { property: 'restaurant', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Restaurant' } }
+                    - { property: 'restaurant', type: 'entity' }
         Company:
             class: App\Entity\Company
             controller: 'App\Controller\CompanyController'
@@ -60,8 +60,8 @@ easy_admin:
                 - iBadgeGoal
                 - vDescription
                 - bStatus
-                - { property: 'fkBadge', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Badge' } }
-                - { property: 'miniGameCategory', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\MiniGameCategory' } }
+                - { property: 'fkBadge', type: 'entity' }
+                - { property: 'miniGameCategory', type: 'entity' }
         MiniGameCategory:
             class: App\Entity\MiniGameCategory
         Order:
@@ -78,10 +78,10 @@ easy_admin:
                     - vCurrency
                     - vIp
                     - vChannel
-                    - { property: 'fkOrderStatus', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\OrderStatus' } }
-                    - { property: 'fkPayment', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Payment' } }
-                    - { property: 'fkRestaurant', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Restaurant' } }
-                    - { property: 'fkUser', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\User' } }
+                    - { property: 'fkOrderStatus', type: 'entity' }
+                    - { property: 'fkPayment', type: 'entity' }
+                    - { property: 'fkRestaurant', type: 'entity' }
+                    - { property: 'fkUser', type: 'entity' }
         OrderStatus:
             class: App\Entity\OrderStatus
         Payment:
@@ -93,8 +93,8 @@ easy_admin:
                     - vGatewayStatus
                     - dTotal
                     - vCurrency
-                    - { property: 'fkPaymentMethod', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\PaymentMethod' } }
-                    - { property: 'orders', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Order' } }
+                    - { property: 'fkPaymentMethod', type: 'entity' }
+                    - { property: 'orders', type: 'entity' }
         PaymentMethod:
             class: App\Entity\PaymentMethod
         Restaurant:
@@ -113,8 +113,8 @@ easy_admin:
                     - vLatitude
                     - jSettings
                     - bStatus
-                    - { property: 'fkCompany', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Company' }, error_bubbling: true }
-                    - { property: 'category', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Category' } }
+                    - { property: 'fkCompany', type: 'entity' }
+                    - { property: 'category', type: 'entity' }
         Waiter:
             class: App\Entity\Waiter
             controller: 'App\Controller\WaiterController'
