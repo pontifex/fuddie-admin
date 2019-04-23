@@ -100,7 +100,7 @@ class WaiterController extends EasyAdminController
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
-        $em = $this->getDoctrine()->getManager('acl');
+        $em = $this->getDoctrine()->getManager('default');
 
         $em->persist($entity);
         $em->flush();

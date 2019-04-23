@@ -79,10 +79,11 @@ class CompanyController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /** @var Company $entity */
         // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
-        $em = $this->getDoctrine()->getManager('acl');
+        $em = $this->getDoctrine()->getManager('default');
 
         $em->persist($entity);
         $em->flush();
