@@ -113,7 +113,7 @@ easy_admin:
                     - vLatitude
                     - jSettings
                     - bStatus
-                    - { property: 'fkCompany', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Company' } }
+                    - { property: 'fkCompany', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Company' }, error_bubbling: true }
                     - { property: 'category', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Category' } }
         Waiter:
             class: App\Entity\Waiter

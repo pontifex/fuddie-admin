@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Restaurant.
@@ -130,6 +131,8 @@ class Restaurant
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_company", referencedColumnName="id", nullable=false)
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkCompany;
 
