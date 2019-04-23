@@ -96,9 +96,11 @@ class MiniGameController extends EasyAdminController
 
     protected function removeEntity($entity)
     {
+        /* @var MiniGame $entity */
+        // soft delete
         $entity->setDDeletedAt(new \DateTime());
 
-        $em = $this->getDoctrine()->getManager('acl');
+        $em = $this->getDoctrine()->getManager('default');
 
         $em->persist($entity);
         $em->flush();
