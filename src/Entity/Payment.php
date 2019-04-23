@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Payment.
@@ -81,6 +82,8 @@ class Payment
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_payment_method", referencedColumnName="id")
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkPaymentMethod;
 

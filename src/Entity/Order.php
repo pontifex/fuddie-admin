@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Order.
@@ -115,6 +116,8 @@ class Order
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_order_status", referencedColumnName="id")
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkOrderStatus;
 
@@ -123,6 +126,8 @@ class Order
      *
      * @ORM\ManyToOne(targetEntity="Payment", inversedBy="orders")
      * @ORM\JoinColumn(name="fk_payment", referencedColumnName="id")
+     *
+     * @Assert\NotNull
      */
     private $fkPayment;
 
@@ -133,6 +138,8 @@ class Order
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_restaurant", referencedColumnName="id")
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkRestaurant;
 
@@ -143,6 +150,8 @@ class Order
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_user", referencedColumnName="id")
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkUser;
 

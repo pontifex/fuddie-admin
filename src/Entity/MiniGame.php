@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * MiniGame.
@@ -88,6 +89,8 @@ class MiniGame
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="fk_badge", referencedColumnName="id", nullable=false)
      * })
+     *
+     * @Assert\NotNull
      */
     private $fkBadge;
 
