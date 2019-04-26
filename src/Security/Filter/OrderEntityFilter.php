@@ -26,7 +26,11 @@ class OrderEntityFilter
                 Order::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Order $choice */
+                return $choice->getId();
+            }
         );
     }
 

@@ -24,7 +24,11 @@ class OrderStatusEntityFilter
                 OrderStatus::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var OrderStatus $choice */
+                return $choice->getId();
+            }
         );
     }
 

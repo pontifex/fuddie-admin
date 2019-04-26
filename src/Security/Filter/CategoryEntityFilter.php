@@ -24,7 +24,11 @@ class CategoryEntityFilter
                 Category::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Category $choice */
+                return $choice->getId();
+            }
         );
     }
 

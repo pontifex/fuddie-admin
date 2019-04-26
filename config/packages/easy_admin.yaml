@@ -123,6 +123,6 @@ easy_admin:
                 - vName
                 - cCode
                 - bStatus
-                - { property: 'fkRestaurant', type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Restaurant' } }
+                - { property: 'fkRestaurant', type: 'entity' }
         User:
             class: App\Entity\User
