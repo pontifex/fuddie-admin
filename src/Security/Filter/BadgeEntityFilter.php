@@ -24,7 +24,11 @@ class BadgeEntityFilter
                 Badge::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Badge $choice */
+                return $choice->getId();
+            }
         );
     }
 

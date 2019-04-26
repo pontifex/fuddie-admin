@@ -25,7 +25,11 @@ class RestaurantEntityFilter
                 Restaurant::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Restaurant $choice */
+                return $choice->getId();
+            }
         );
     }
 

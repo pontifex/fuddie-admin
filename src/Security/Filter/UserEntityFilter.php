@@ -24,7 +24,11 @@ class UserEntityFilter
                 User::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var User $choice */
+                return $choice->getId();
+            }
         );
     }
 

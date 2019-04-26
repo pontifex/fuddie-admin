@@ -26,7 +26,11 @@ class PaymentEntityFilter
                 Payment::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Payment $choice */
+                return $choice->getId();
+            }
         );
     }
 

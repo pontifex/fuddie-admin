@@ -24,7 +24,11 @@ class CompanyEntityFilter
                 Company::class,
                 null,
                 new ORMQueryBuilderLoader($qb)
-            )
+            ),
+            function ($choice) {
+                /** @var Company $choice */
+                return $choice->getId();
+            }
         );
     }
 
