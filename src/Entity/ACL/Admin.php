@@ -4,6 +4,7 @@ namespace App\Entity\ACL;
 
 use App\Security\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -53,7 +54,7 @@ class Admin implements UserInterface
      * @ORM\Column(name="d_created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="create")
      */
-    private $dCreatedAt = 'CURRENT_TIMESTAMP';
+    private $dCreatedAt;
 
     /**
      * @var \DateTime
@@ -61,7 +62,7 @@ class Admin implements UserInterface
      * @ORM\Column(name="d_updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      * @Gedmo\Timestampable(on="update")
      */
-    private $dUpdatedAt = 'CURRENT_TIMESTAMP';
+    private $dUpdatedAt;
 
     /**
      * @var \DateTime|null

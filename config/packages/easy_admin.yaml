@@ -23,7 +23,7 @@ easy_admin:
             form:
                 fields:
                 - email
-                - password
+                - {property: 'password', type: 'password' }
                 - { property: 'roles', type: 'collection' }
                 - { property: 'companies', type: 'collection' }
                 - { property: 'restaurants', type: 'collection' }
