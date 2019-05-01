@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Search\Autocomplete;
 use EasyCorp\Bundle\EasyAdminBundle\Search\Paginator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminController extends EasyAdminController
 {
@@ -19,10 +20,15 @@ class AdminController extends EasyAdminController
      */
     private $filter;
 
-    public function __construct(
-        AdminEntityFilter $filter
-    ) {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $passwordEncoder;
+
+    public function __construct(AdminEntityFilter $filter, UserPasswordEncoderInterface $passwordEncoder)
+    {
         $this->filter = $filter;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     public static function getSubscribedServices(): array
@@ -68,6 +74,11 @@ class AdminController extends EasyAdminController
 
     protected function persistEntity($entity)
     {
+        $this->encodePassword($entity);
+        /* @var Admin $entity */
+        $entity->setDCreatedAt(new \DateTime());
+        $entity->setDUpdatedAt(new \DateTime());
+
         $em = $this->getDoctrine()->getManager('acl');
 
         $em->persist($entity);
@@ -103,6 +114,10 @@ class AdminController extends EasyAdminController
 
     protected function updateEntity($entity)
     {
+        $this->encodePassword($entity);
+        /* @var Admin $entity */
+        $entity->setDUpdatedAt(new \DateTime());
+
         $em = $this->getDoctrine()->getManager('acl');
 
         $em->persist($entity);
@@ -138,5 +153,12 @@ class AdminController extends EasyAdminController
         $this->denyAccessUnlessGranted('show', Admin::class);
 
         return parent::showAction();
+    }
+
+    protected function encodePassword(Admin $admin)
+    {
+        $admin->setPassword(
+            $this->passwordEncoder->encodePassword($admin, $admin->getPassword())
+        );
     }
 }
