@@ -25,13 +25,8 @@ class AdminController extends EasyAdminController
      */
     private $passwordEncoder;
 
-    /**
-     * UserController constructor.
-     *
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     */
-
-    public function __construct(AdminEntityFilter $filter, UserPasswordEncoderInterface $passwordEncoder) {
+    public function __construct(AdminEntityFilter $filter, UserPasswordEncoderInterface $passwordEncoder)
+    {
         $this->filter = $filter;
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -160,10 +155,10 @@ class AdminController extends EasyAdminController
         return parent::showAction();
     }
 
-    public function encodePassword($user)
+    protected function encodePassword(Admin $admin)
     {
-        $user->setPassword(
-            $this->passwordEncoder->encodePassword($user, $user->getPassword())
+        $admin->setPassword(
+            $this->passwordEncoder->encodePassword($admin, $admin->getPassword())
         );
     }
 }

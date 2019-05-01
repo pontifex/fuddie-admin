@@ -4,7 +4,6 @@ namespace App\Entity\ACL;
 
 use App\Security\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
