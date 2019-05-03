@@ -4,6 +4,7 @@ namespace App\Security\Filter;
 
 use App\Entity\ACL\Admin;
 use App\Entity\Company;
+use App\Security\RoleInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\ChoiceList\DoctrineChoiceLoader;
@@ -52,6 +53,19 @@ class CompanyEntityFilter
     ) {
         // do not show soft deleted
         $qb->andWhere('entity.dDeletedAt IS NULL');
+
+        if ($admin->hasRole(RoleInterface::ROLE_SUPER_ADMIN)) {
+            return $qb;
+        }
+
+        // show only companies granted to
+        if ($admin->hasRole(RoleInterface::ROLE_COMPANY_ADMIN)) {
+            if (count($admin->getCompanies())) {
+                $where = 'entity.id IN ('.implode(', ', $admin->getCompanies()).')';
+
+                $qb->andWhere($where);
+            }
+        }
 
         return $qb;
     }
