@@ -67,11 +67,18 @@ class RestaurantEntityFilter
             }
 
             $qb->andWhere($where);
+        } else {
+            $where = 'entity.fkCompany IS NULL';
+            $qb->orWhere($where);
         }
 
-        if (! $admin->hasRole(RoleInterface::ROLE_COMPANY_ADMIN)) {
-            $where = 'entity.fkCompany IS NULL';
-            $qb->andWhere($where);
+        // show only restaurants granted to
+        if ($admin->hasRole(RoleInterface::ROLE_RESTAURANT_ADMIN)) {
+            if (count($admin->getRestaurants())) {
+                $where = 'entity.id IN ('.implode(', ', $admin->getRestaurants()).')';
+
+                $qb->andWhere($where);
+            }
         }
 
         return $qb;
