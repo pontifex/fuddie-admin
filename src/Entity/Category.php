@@ -70,7 +70,15 @@ class Category
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\ManyToMany(targetEntity="Restaurant", mappedBy="category")
+     * @ORM\ManyToMany(targetEntity="Restaurant", inversedBy="category")
+     * @ORM\JoinTable(name="restaurant_has_category",
+     *   joinColumns={
+     *     @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="restaurant_id", referencedColumnName="id")
+     *   }
+     * )
      */
     private $restaurant;
 
